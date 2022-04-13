@@ -1,0 +1,26 @@
+﻿{
+	"Tables":
+	[
+		{
+			"table":"PageA",
+			"key":"ID",
+			"alias": "Dep",
+			"Fields":[
+				{"name":"Name", "alias":"DepName", "format":""},
+				{"name":"RecNumber","alias":"RecNumber", "format":"{0:0}"}
+			]
+		},
+		{
+			"table":"PageADetails",
+			"key":"ID",
+			"relation":"PageA",
+			"fKey":"PageADetailID",
+			"alias": "parts",
+			"Fields":[
+				{"name":"Name", "alias":"Name"},
+				{"name":"MaterialID", "alias":"matname", "formatNull": "no value"},
+				{"name":"Density", "alias":"Density"}
+			]
+		}		
+	]
+}

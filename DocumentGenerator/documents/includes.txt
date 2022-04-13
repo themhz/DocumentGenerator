@@ -1,0 +1,10 @@
+﻿{
+	"Includes":
+	[
+		{
+			"file":"PageA.docx",
+			"alias": "template",
+			"table":"PageA"
+		}
+	]
+}
