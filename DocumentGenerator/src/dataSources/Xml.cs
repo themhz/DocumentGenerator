@@ -21,6 +21,23 @@ namespace DocumentGenerator {
             createIndexes(dataSets);
         }
 
+        public string GetValue(BindingField field, List<BindingTable.Row> contextStack, BindingTable.Row currentRow) {
+            BindingTable table = field.Table;
+
+            if (currentRow != null && currentRow.Table == table) {
+                return GetValue(field, currentRow);
+            }
+
+            for (int index = contextStack.Count - 1; index>= 0; index--) {
+                BindingTable.Row row = contextStack[index];
+                if (row.Table == field.Table) {
+                    return GetValue(field, row);
+                }
+            }
+
+            return GetValue(field, 0);
+        }
+
         public string GetValue(BindingField field, int index = 0) {
             DataColumn column = field.Column;
             DataTable table = column.Table;

@@ -17,9 +17,9 @@ namespace DocumentGenerator
                 DataRow = row;
             }
 
-            public string GetValue(BindingField bindingField) {
+            public string GetValue(BindingField bindingField, List<Row> contextStack) {
 
-                return Table._dataSource.GetValue(bindingField, this);
+                return Table._dataSource.GetValue(bindingField, contextStack, this);
             }
         }
 

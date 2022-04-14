@@ -246,7 +246,7 @@ namespace DocumentGenerator.DXDocuments
         /// </summary>
         /// <param name="comment">A comment object that links to the document table</param>
         /// <param name="bindingTable">The table that contains the data used for the table population</param>        
-        public void PopulateTable(Comment comment, BindingTable bindingTable) { // JObject jo, Comment comment, string id = "", RichEditDocumentServer wp = null) {
+        public void PopulateTable(Comment comment, BindingTable bindingTable, List<BindingTable.Row> contextStack) { // JObject jo, Comment comment, string id = "", RichEditDocumentServer wp = null) {
 
             Table table = comment.Table;
             DataTable dataTable = bindingTable.DataTable;
@@ -274,7 +274,7 @@ namespace DocumentGenerator.DXDocuments
                     //3.1.1.1 Ελέγχουμε αν το alias είναι έγκυρο
                     if (field != null) {
                         //3.1.1.2 Βρίσκουμε την τιμή του field
-                        string text = row.GetValue(field);
+                        string text = row.GetValue(field, contextStack);
 
                         //3.1.1.3 Αντικαθιστούμε το alias με το κείμενο
                         ReplaceRangeWithText(token.Range, text);

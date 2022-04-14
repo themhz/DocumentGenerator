@@ -99,7 +99,7 @@ namespace DocumentGenerator
                         //3.1.1.1 Ελέγχουμε αν το alias είναι έγκυρο
                         if (fieldsIndex.TryGetValue(token.Alias, out field)) {
                             //3.1.1.2 Αντικαθιστούμε το alias με το κείμενο
-                            manager.ReplaceRangeWithText(token.Range, dataSource.GetValue(field));
+                            manager.ReplaceRangeWithText(token.Range, dataSource.GetValue(field, bindingStack, null));
                         }
                     }
                     else
@@ -150,7 +150,7 @@ namespace DocumentGenerator
                     BindingTable table;
                     if (tablesIndex.TryGetValue(tableName, out table)) {
                         //3.1.3.3 Παράγουμε τον πίνακα
-                        manager.PopulateTable(comment, table);
+                        manager.PopulateTable(comment, table, bindingStack);
                     } else {
                         // TODO: Log
                     }
@@ -159,7 +159,7 @@ namespace DocumentGenerator
             } finally
             {
                 //3.2 Αφαιρούμε το ID από το context stack *
-                if (key != null) bindingStack.RemoveAt(bindingStack.Count);
+                if (key != null) bindingStack.RemoveAt(bindingStack.Count - 1);
             }
 
             return manager;

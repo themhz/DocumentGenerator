@@ -39,3 +39,4 @@ C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\obj\Debug\Docum
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\obj\Debug\DocumentGenerator.csproj.CopyComplete
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\obj\Debug\DocumentGenerator.exe
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\obj\Debug\DocumentGenerator.pdb
+C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\obj\Debug\DocumentGenerator.csproj.AssemblyReference.cache
