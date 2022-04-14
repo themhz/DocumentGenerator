@@ -12,19 +12,22 @@ namespace DocumentGenerator {
 
         internal void run() {
 
-            //Βήματα
+            //Φορτώνουμε τις διαδρομές για τα αρχεία που θα χρησιμοποιήσει το σύστημα
             string originalDocument = @"../../documents/Main.docx";
             string generatedDocument = @"../../documents/main_document_generated.docx";
             string fieldsPath = @"../../documents/fields.txt";
             string includesPath = @"../../documents/includes.txt";
             string dataSetPath = @"../../documents/datasets/dataEnergyBuilding.xml";
 
+            //Φορτώνουμε το dataset
             List<DataSet> dataSets = new List<DataSet>();
             DataSet dataSet = new DataSet();
             dataSet.ReadXml(dataSetPath);
-            dataSets.Add(dataSet);            
+            dataSets.Add(dataSet);
 
-            Processor processor = new Processor(originalDocument, fieldsPath, includesPath, generatedDocument, dataSets);
+            IDataSource dataSource = new Xml(dataSets);
+            //Ενεργοποιούμε τον επεξεργαστή εγγράφων
+            Processor processor = new Processor(originalDocument, fieldsPath, includesPath, generatedDocument, dataSource);
             processor.start();
 
 

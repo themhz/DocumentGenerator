@@ -61,8 +61,10 @@
     <Compile Include="src\AppEngine.cs" />
     <Compile Include="src\bindings\BindingField.cs" />
     <Compile Include="src\bindings\BindingInclude.cs" />
-    <Compile Include="src\bindings\BindingKey.cs" />
+    <Compile Include="src\bindings\BindingRow.cs" />
     <Compile Include="src\bindings\BindingTable.cs" />
+    <Compile Include="src\dataSources\IDataSource.cs" />
+    <Compile Include="src\dataSources\Xml.cs" />
     <Compile Include="src\DevExpress\Manager.cs" />
     <Compile Include="src\generics\Table.cs" />
     <Compile Include="src\generics\TableRow.cs" />

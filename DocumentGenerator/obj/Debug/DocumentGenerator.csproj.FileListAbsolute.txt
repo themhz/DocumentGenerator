@@ -35,7 +35,6 @@ C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\de\De
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\es\DevExpress.Pdf.v21.2.Core.resources.dll
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\ja\DevExpress.Pdf.v21.2.Core.resources.dll
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\ru\DevExpress.Pdf.v21.2.Core.resources.dll
-C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\obj\Debug\DocumentGenerator.csproj.AssemblyReference.cache
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\obj\Debug\DocumentGenerator.csproj.CoreCompileInputs.cache
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\obj\Debug\DocumentGenerator.csproj.CopyComplete
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\obj\Debug\DocumentGenerator.exe

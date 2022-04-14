@@ -6,7 +6,7 @@
 			"key":"ID",
 			"alias": "Dep",
 			"Fields":[
-				{"name":"Name", "alias":"DepName", "format":""},
+				{"name":"Name", "alias":"aName", "format":""},
 				{"name":"RecNumber","alias":"RecNumber", "format":"{0:0}"}
 			]
 		},
@@ -17,9 +17,10 @@
 			"fKey":"PageADetailID",
 			"alias": "parts",
 			"Fields":[
-				{"name":"Name", "alias":"Name"},
+				{"name":"Name", "alias":"dName"},
 				{"name":"MaterialID", "alias":"matname", "formatNull": "no value"},
-				{"name":"Density", "alias":"Density"}
+				{"name":"Density", "alias":"Density"},
+				{"name":"IsExterior", "alias":"ext", "format":"ΝΑΙ", "formatNull": "ΟΧΙ"}
 			]
 		}		
 	]
