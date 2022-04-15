@@ -2,9 +2,14 @@
 	"Includes":
 	[
 		{
-			"file":"PageA.docx",
+			"file":	"PageA.docx",
 			"alias": "template",
-			"table":"PageA"
+			"table": "PageA"
+		},
+		{
+			"file":	"PageADetails.docx",
+			"alias": "template2",			
+			"table": "PageADetails"
 		}
 	]
 }

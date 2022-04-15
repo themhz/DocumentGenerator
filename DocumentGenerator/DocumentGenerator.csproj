@@ -58,10 +58,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="documents\datasets\dsBuildingHeatInsulation.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
+    </Compile>
     <Compile Include="src\AppEngine.cs" />
+    <Compile Include="src\bindings\BindingRelation.cs" />
     <Compile Include="src\bindings\BindingField.cs" />
     <Compile Include="src\bindings\BindingInclude.cs" />
-    <Compile Include="src\bindings\BindingRow.cs" />
     <Compile Include="src\bindings\BindingTable.cs" />
     <Compile Include="src\dataSources\IDataSource.cs" />
     <Compile Include="src\dataSources\Xml.cs" />
@@ -77,10 +82,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="documents\datasets\dsBuildingHeatInsulation.xsc">
+      <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
+    </None>
+    <None Include="documents\datasets\dsBuildingHeatInsulation.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsBuildingHeatInsulation.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="documents\datasets\dsBuildingHeatInsulation.xss">
+      <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
+    </None>
     <None Include="documents\PageA.docx" />
     <None Include="documents\Main.docx" />
-    <None Include="documents\old\main_document.docx" />
-    <None Include="documents\old\template_part.docx" />
+    <None Include="documents\energyBuilding\Main.docx" />
+    <None Include="documents\energyBuilding\PageADetails.docx" />
+    <None Include="documents\PageADetails.docx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

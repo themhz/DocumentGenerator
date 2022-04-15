@@ -18,10 +18,13 @@ namespace DocumentGenerator {
             string fieldsPath = @"../../documents/fields.txt";
             string includesPath = @"../../documents/includes.txt";
             string dataSetPath = @"../../documents/datasets/dataEnergyBuilding.xml";
+            string dataSetPathSchema = @"../../documents/datasets/dsBuildingHeatInsulation.xsd";
 
             //Φορτώνουμε το dataset
             List<DataSet> dataSets = new List<DataSet>();
             DataSet dataSet = new DataSet();
+            dataSet.ReadXmlSchema(dataSetPathSchema);
+
             dataSet.ReadXml(dataSetPath);
             dataSets.Add(dataSet);
 

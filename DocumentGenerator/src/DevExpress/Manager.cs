@@ -12,6 +12,8 @@ using dxComment = DevExpress.XtraRichEdit.API.Native.Comment;
 using dxTable = DevExpress.XtraRichEdit.API.Native.Table;
 using dxTableRow = DevExpress.XtraRichEdit.API.Native.TableRow;
 using dxTableCell = DevExpress.XtraRichEdit.API.Native.TableCell;
+using dxSubDocument = DevExpress.XtraRichEdit.API.Native.SubDocument;
+using System.IO;
 
 namespace DocumentGenerator.DXDocuments
 {
@@ -30,6 +32,7 @@ namespace DocumentGenerator.DXDocuments
                 _wordProcessor = new RichEditDocumentServer();
                 _wordProcessor.Document.BeginUpdate();
                 _wordProcessor.LoadDocument(fileName);
+                
                 _tables.Clear();
 
                 foreach (dxTable table in _wordProcessor.Document.Tables) {
@@ -39,7 +42,7 @@ namespace DocumentGenerator.DXDocuments
                     _tables.Add(_table);
                 }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
                 if (_wordProcessor != null) {
                     if (_wordProcessor.Document != null) {
@@ -48,6 +51,8 @@ namespace DocumentGenerator.DXDocuments
                     _wordProcessor.Dispose();
                     _wordProcessor = null;
                 }
+
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -94,17 +99,20 @@ namespace DocumentGenerator.DXDocuments
             }
 
             dxDocument document = _wordProcessor.Document;
+            dxRange searchRange;
+            if (range == null)
+                searchRange = document.Range;
+            else
+                searchRange = range.Value;
 
-            if (range != null) {
-                result = document.FindAll(r, range.Value);
-                for (int i = 0; i < result.Length; i++) {
-                    dxRange aliasRange = result[i]; // ΕΙΝΑΙ ΛΑΘΟΣ: document.CreateRange(result[i].Start.ToInt(), result[i].End.ToInt());
-                    string text = document.GetText(aliasRange).Trim();
-                    if (text != string.Empty && text.StartsWith("{!")) {
-                        text = text.Replace("{", "");
-                        text = text.Replace("}", "");
-                        fields.Add(new Token(text, text, new Range(aliasRange), null));
-                    }
+            result = document.FindAll(r, searchRange);
+            for (int i = 0; i < result.Length; i++) {
+                dxRange aliasRange = result[i]; // ΕΙΝΑΙ ΛΑΘΟΣ: document.CreateRange(result[i].Start.ToInt(), result[i].End.ToInt());
+                string text = document.GetText(aliasRange).Trim();
+                if (text != string.Empty && !text.StartsWith("{!")) {
+                    text = text.Replace("{", "");
+                    text = text.Replace("}", "");
+                    fields.Add(new Token(text, text, new Range(aliasRange), null));
                 }
             }
 
@@ -198,7 +206,9 @@ namespace DocumentGenerator.DXDocuments
             foreach (DevExpress.XtraRichEdit.API.Native.Comment comment in _wordProcessor.Document.Comments) {
                 dxTableCell tableCell = _wordProcessor.Document.Tables.GetTableCell(comment.Range.Start);
                 dxTable table = tableCell.Row.Table;
-                comments.Add(new Comment(comment, getTable(comment.Range), new Range(comment.Range), _wordProcessor.Document.GetText(comment.Range)));  //new Table(table, new Range(table.Range)), new Range(comment.Range)));
+
+                //comments.Add(new Comment(comment, getTable(comment.Range), new Range(comment.Range), _wordProcessor.Document.GetText(comment.Range)));  //new Table(table, new Range(table.Range)), new Range(comment.Range)));
+                comments.Add(new Comment(comment, getTable(comment.Range), new Range(comment.Range), getCommentText(comment)));  //new Table(table, new Range(table.Range)), new Range(comment.Range)));
             }
 
             // TODO: 1. Να φτιάξουμε μία array ταξινομημένη, με τα ranges των πινάκων, 2. Με δυαδική αναζήτηση να βρίσκουμε αν μία θέση ανήκει σε κάποιο από αυτά τα ranges
@@ -227,6 +237,12 @@ namespace DocumentGenerator.DXDocuments
                 _wordProcessor.Document.Replace(range.Value, targetText);
         }
 
+        public void ReplaceRangeWithText(dxRange range, string targetText) {
+            //this.mainWordProcessor.Document.BeginUpdate();
+            if (range != null)
+                _wordProcessor.Document.Replace(range, targetText);
+        }
+
         public void ReplaceRangeWithContent(Manager manager, Range range /*, string file, string id, string foreightKey = "", RichEditDocumentServer wp = null*/) {
             // Delete alias range
             dxPosition start = range.Value.Start;
@@ -251,6 +267,9 @@ namespace DocumentGenerator.DXDocuments
             Table table = comment.Table;
             DataTable dataTable = bindingTable.DataTable;
 
+            // Delete comment
+            _wordProcessor.Document.Delete(comment.Range.Value);
+
             // Insert <newline> after the table to create space for the new table                       
             _wordProcessor.Document.InsertText(table.Element.Range.End, DevExpress.Office.Characters.LineBreak.ToString());
             var newTableRange = _wordProcessor.Document.InsertText(table.Element.Range.End, "{{newTable}}");
@@ -259,30 +278,38 @@ namespace DocumentGenerator.DXDocuments
             var headerRange = getRowsRange(table.Element, 0, table.HeaderCount);
             _wordProcessor.Document.InsertDocumentContent(newTableRange.End, headerRange, DevExpress.XtraRichEdit.API.Native.InsertOptions.KeepSourceFormatting);
 
+            // Copy body <n> times
+            var bodyRange = getRowsRange(table.Element, table.HeaderCount, table.BodyCount);
+
             BindingTable.Row row;
-            bindingTable.Start();
+            BindingTable.Enumerator enumerator = new BindingTable.Enumerator(bindingTable);
+            dxRange lastRange = newTableRange;
 
-            dxPosition lastPos = newTableRange.End;
-            while ((row = bindingTable.Next()) != null) {
-                var bodyRange = getRowsRange(table.Element, table.HeaderCount, table.BodyCount);
-                lastPos = _wordProcessor.Document.InsertDocumentContent(lastPos, bodyRange, DevExpress.XtraRichEdit.API.Native.InsertOptions.KeepSourceFormatting).End;
+            enumerator.Start();
+            while ((row = enumerator.Next()) != null) { // TODO: use index for performance
+                if (row.InContext(contextStack)) {
+                    lastRange = _wordProcessor.Document.InsertDocumentContent(lastRange.End, bodyRange, DevExpress.XtraRichEdit.API.Native.InsertOptions.KeepSourceFormatting);
 
-                foreach (Token token in table.Tokens) {
-                    //3.1.1 Αν είναι field:
-                    BindingField field = bindingTable.BindingFields.Find((BindingField f) => token.Alias == f.Alias || token.Alias == f.FullName);
+                    foreach (Token token in table.Tokens) {
+                        //3.1.1 Αν είναι field:
+                        BindingField field = bindingTable.BindingFields.Find((BindingField f) => token.Alias == f.Alias || token.Alias == f.FullName);
 
-                    //3.1.1.1 Ελέγχουμε αν το alias είναι έγκυρο
-                    if (field != null) {
-                        //3.1.1.2 Βρίσκουμε την τιμή του field
-                        string text = row.GetValue(field, contextStack);
+                        //3.1.1.1 Ελέγχουμε αν το alias είναι έγκυρο
+                        if (field != null) {
+                            //3.1.1.2 Βρίσκουμε την τιμή του field
+                            string text = row.GetValue(field, contextStack);
 
-                        //3.1.1.3 Αντικαθιστούμε το alias με το κείμενο
-                        ReplaceRangeWithText(token.Range, text);
-                    } else {
-                        // TODO: Log
+                            //3.1.1.3 Αντικαθιστούμε το alias με το κείμενο
+                            replaceTextInRange($"{{{token.Original}}}", text, lastRange);
+                        } else {
+                            // TODO: Log
+                        }
                     }
                 }
             }
+
+            _wordProcessor.Document.ReplaceAll("{{newTable}}", " ", DevExpress.XtraRichEdit.API.Native.SearchOptions.None, _wordProcessor.Document.Range);
+            _wordProcessor.Document.Delete(comment.Table.Element.Range);
         }
 
         /// <summary>
@@ -302,6 +329,34 @@ namespace DocumentGenerator.DXDocuments
 
         protected static dxDocument getManagerDocument(Manager manager) {
             return manager._wordProcessor.Document;
+        }
+
+        protected string getCommentText(dxComment comment) {
+            dxSubDocument doc = comment.BeginUpdate();
+            string commentText = doc.GetText(doc.Range);
+            comment.EndUpdate(doc);
+
+            return commentText;
+        }
+
+        protected void replaceTextInRange(string sourceText, string targetText, dxRange range) {
+            //this.mainWordProcessor.Document.BeginUpdate();
+            dxRange[] targetRanges = this.getTextRanges(sourceText, range);
+            foreach(var targetRange in targetRanges) {
+                _wordProcessor.Document.Replace(targetRange, targetText);
+            }
+        }
+
+        protected dxRange[] getTextRanges(string search, dxRange range) {
+            return _wordProcessor.Document.FindAll(new Regex(search), range);
+        }
+
+        public void ReplacePageBreakToken(bool ignore) {
+            Regex r = new Regex("{PBR}");
+            if (!ignore)
+                _wordProcessor.Document.ReplaceAll(r, DevExpress.Office.Characters.PageBreak.ToString());
+            else
+                _wordProcessor.Document.ReplaceAll(r, string.Empty);
         }
     }
 }

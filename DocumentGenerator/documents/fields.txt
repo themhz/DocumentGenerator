@@ -3,25 +3,21 @@
 	[
 		{
 			"table":"PageA",
-			"key":"ID",
-			"alias": "Dep",
+			"alias": "PageA",
 			"Fields":[
 				{"name":"Name", "alias":"aName", "format":""},
-				{"name":"RecNumber","alias":"RecNumber", "format":"{0:0}"}
+				{"name":"RecNumber","alias":"RecNumber", "format":"{0:0}"},
+				{"name":"Image", "alias":"aImage"},
 			]
 		},
 		{
 			"table":"PageADetails",
-			"key":"ID",
-			"relation":"PageA",
-			"fKey":"PageADetailID",
-			"alias": "parts",
+			"alias": "PageADetails",
 			"Fields":[
-				{"name":"Name", "alias":"dName"},
-				{"name":"MaterialID", "alias":"matname", "formatNull": "no value"},
-				{"name":"Density", "alias":"Density"},
-				{"name":"IsExterior", "alias":"ext", "format":"ΝΑΙ", "formatNull": "ΟΧΙ"}
+				{"name":"ID", "alias":"aID"},
+				{"name":"Name", "alias":"paName"},
 			]
+
 		}		
 	]
 }

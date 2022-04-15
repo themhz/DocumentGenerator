@@ -12,6 +12,7 @@ namespace DocumentGenerator {
         string GetValue(BindingField field, List<BindingTable.Row> contextRows, BindingTable.Row currentRow);
         string GetValue(BindingField field, int index = 0);
         string GetValue(BindingField field, BindingTable.Row row);
-        //string GetValueByID(BindingField field, string id = "");
+        string GetContextValue(BindingField field, int index, List<BindingTable.Row> contextStack);
+        void GetRelations(Dictionary<string, BindingTable> tables, Dictionary<string, BindingField> fields);
     }
 }

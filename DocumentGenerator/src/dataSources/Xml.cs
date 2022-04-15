@@ -9,13 +9,13 @@ using System.Globalization;
 
 namespace DocumentGenerator {
     public class Xml : IDataSource {
-        private DataSet _dataSet;
+        //private DataSet _dataSet;
         private Dictionary<string, DataColumn> columnsIndex;
         private Dictionary<string, DataTable> tablesIndex;
 
-        public Xml(string _xmlPath) {
-            columnsIndex = getDictionary(_xmlPath);
-        }
+        //public Xml(string _xmlPath) {
+        //    columnsIndex = getDictionary(_xmlPath);
+        //}
 
         public Xml(List<DataSet> dataSets) {
             createIndexes(dataSets);
@@ -36,6 +36,28 @@ namespace DocumentGenerator {
             }
 
             return GetValue(field, 0);
+        }
+
+        public string GetContextValue(BindingField field, int index, List<BindingTable.Row> contextStack) {
+            int count = field.Table.Count;
+            int currentIndex = -1;
+
+            BindingTable.Row row;
+            BindingTable bindingTable = field.Table;
+            BindingTable.Enumerator enumerator = new BindingTable.Enumerator(bindingTable);
+
+            enumerator.Start();
+            while ((row = enumerator.Next()) != null) { // TODO: use index for performance
+                if (row.InContext(contextStack)) {
+                    currentIndex++;
+
+                    if (currentIndex == index) {
+                        return GetValue(field, row);
+                    }
+                }
+            }
+
+            return null;
         }
 
         public string GetValue(BindingField field, int index = 0) {
@@ -165,12 +187,38 @@ namespace DocumentGenerator {
             DataTable table = null;
 
             if (tablesIndex.TryGetValue(tableName, out table)) {
-                DataColumn keyColumn = table.PrimaryKey[0];
+                DataColumn keyColumn;
+                if (table.PrimaryKey != null && table.PrimaryKey.Length > 0)
+                    keyColumn = table.PrimaryKey[0];
+                else
+                    keyColumn = table.Columns[0];
 
-                return new BindingTable(tableName, alias, table, keyColumn, new List<BindingField>(), this);
+                return new BindingTable(tableName, alias, table, keyColumn, new List<BindingField>(), new List<BindingRelation>(), this);
             }
 
             return null;
+        }
+
+        public void GetRelations(Dictionary<string, BindingTable> tables, Dictionary<string, BindingField> fields) {
+            foreach (var pair in tables) {
+                BindingTable table = pair.Value;
+                var dataRelations = table.DataTable.ParentRelations;
+
+                foreach (DataRelation dataRelation in dataRelations) {
+                    string parentTableName = dataRelation.ParentTable.TableName;
+                    DataColumn column = dataRelation.ChildColumns[0];
+                    BindingTable parentTable;
+                    if (tables.TryGetValue(parentTableName, out parentTable)) {
+                        BindingField foreignKey;
+                        if (fields.TryGetValue($"{table.Name}.{column.ColumnName}", out foreignKey)) {
+                            table.BindingRelations.Add(new BindingRelation(parentTable, foreignKey));
+                        }
+                        else {
+                            table.BindingRelations.Add(new BindingRelation(parentTable, new BindingField(table, column.ColumnName, column.ColumnName, column, "", "")));
+                        }
+                    }
+                }
+            }
         }
 
         public BindingField GetField(BindingTable table, string fieldName, string alias, string formatString, string formatNull) {
@@ -183,22 +231,22 @@ namespace DocumentGenerator {
             return null;
         }
 
-        private Dictionary<string, DataColumn> getDictionary(string xmlPath) {
-            var dictionary = new Dictionary<String, DataColumn>();
+        //private Dictionary<string, DataColumn> getDictionary(string xmlPath) {
+        //    var dictionary = new Dictionary<String, DataColumn>();
 
-            _dataSet = new DataSet();
-            _dataSet.ReadXmlSchema(xmlPath);
-            _dataSet.ReadXml(xmlPath, XmlReadMode.ReadSchema);
+        //    _dataSet = new DataSet();
+        //    _dataSet.ReadXmlSchema(xmlPath);
+        //    _dataSet.ReadXml(xmlPath, XmlReadMode.ReadSchema);
 
            
-            foreach (DataTable table in _dataSet.Tables) {
-                foreach (DataColumn column in table.Columns) {
-                    dictionary.Add(table.TableName + "." + column.ColumnName, column);
-                }
-            }
+        //    foreach (DataTable table in _dataSet.Tables) {
+        //        foreach (DataColumn column in table.Columns) {
+        //            dictionary.Add(table.TableName + "." + column.ColumnName, column);
+        //        }
+        //    }
 
-            return dictionary;
-        }
+        //    return dictionary;
+        //}
 
         private void createIndexes(List<DataSet> dataSets) {
             tablesIndex = new Dictionary<string, DataTable>();
@@ -212,6 +260,17 @@ namespace DocumentGenerator {
                     }
                 }
             }
+        }
+
+        public List<BindingRelation> getTableRelations(List<DataSet> dataSets) {
+
+            foreach (DataSet dataSet in dataSets) {
+                foreach (DataTable table in dataSet.Tables) {
+
+                }
+            }
+
+                    return null;
         }
 
         //Function to get any field by id. You need to specify parentnode.childnode in the field parameter, and the primary key ID
