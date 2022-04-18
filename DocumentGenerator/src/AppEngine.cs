@@ -33,19 +33,6 @@ namespace DocumentGenerator {
             Processor processor = new Processor(originalDocument, fieldsPath, includesPath, generatedDocument, dataSource);
             processor.start();
 
-
-            //JObject jo = jo.GetValue("headerCount").ToString();
-
-            //using (RichEditDocumentServer WordProcessor = new RichEditDocumentServer()) {
-            //    DevExpress devExpress = new DevExpress(mainDocument, WordProcessor);
-            //    devExpress.Load();
-            //    var test = devExpress.getAliases();
-            //}
-
-
-            //DevExpress devExpress = new DevExpress();
-
-
             //3.Καλούμε την επεξεργασία του document(master template)
             //3.0 Προσθέτουμε το τρέχον ID στο context stack (μαζί με τον πίνακα) *
             //3.1 Συλλέγουμε τα aliases από το document και τα επιβεβαιώνουμε αν είναι έγκυρα

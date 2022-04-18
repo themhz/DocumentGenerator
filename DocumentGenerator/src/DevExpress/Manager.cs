@@ -13,7 +13,9 @@ using dxTable = DevExpress.XtraRichEdit.API.Native.Table;
 using dxTableRow = DevExpress.XtraRichEdit.API.Native.TableRow;
 using dxTableCell = DevExpress.XtraRichEdit.API.Native.TableCell;
 using dxSubDocument = DevExpress.XtraRichEdit.API.Native.SubDocument;
+using dxImageSource = DevExpress.XtraRichEdit.API.Native.DocumentImageSource;
 using System.IO;
+using DocumentGenerator.Helpers;
 
 namespace DocumentGenerator.DXDocuments
 {
@@ -173,31 +175,7 @@ namespace DocumentGenerator.DXDocuments
                 table.HeaderCount = minRow;
                 table.BodyCount = maxRow - minRow;
                 table.FooterCount = table.Element.Rows.Count - maxRow;
-            }
-            //else {
-            //    for (int indexRow = 0; indexRow < table.Rows.Count; indexRow++) {
-            //        dxTableRow dxRow = table.Rows[indexRow];
-            //        result = document.FindAll(r, row.Range);
-
-            //        result = _wordProcessor.Document.FindAll(r);
-            //        for (int i = 0; i < result.Length; i++) {
-            //            dxRange aliasRange = result[i];
-            //            string text = document.GetText(aliasRange);
-            //            text = text.Trim();
-            //            text = text.Replace("{", "");
-            //            text = text.Replace("}", "");
-            //            if (text != string.Empty) {
-            //                if (text.StartsWith("!")) {
-            //                    fields.Add(new Token(text.Replace("!", ""), text, new Range(aliasRange), getTable(aliasRange)));
-            //                } else {
-            //                    fields.Add(new Token(text.Replace("!", ""), text, new Range(aliasRange), null));
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-
-            //return fields;
+            }       
         }
 
         public List<Comment> GetComments() {
@@ -361,6 +339,23 @@ namespace DocumentGenerator.DXDocuments
                 _wordProcessor.Document.ReplaceAll(r, DevExpress.Office.Characters.PageBreak.ToString());
             else
                 _wordProcessor.Document.ReplaceAll(r, string.Empty);
+        }
+
+        public void ReplaceTextWithImage(dxRange sourceRange, string byteCode) {
+            //this.mainWordProcessor.Document.BeginUpdate();
+            _wordProcessor.Document.Unit = DevExpress.Office.DocumentUnit.Inch;
+            
+            if (sourceRange != null) {
+
+                byte[] bytes = Convert.FromBase64String(byteCode);
+                bytes = ImageResizer.resize(bytes, 700, 700);
+                using (MemoryStream ms = new MemoryStream(bytes)) {
+                    dxImageSource image = dxImageSource.FromStream(ms);
+                    _wordProcessor.Document.Images.Insert(sourceRange.Start, image);
+                }                
+            }
+            _wordProcessor.Document.Delete(sourceRange);
+            //this.wordProcessor.Document.Replace(targetRange, targetText);
         }
     }
 }

@@ -58,6 +58,9 @@ namespace DocumentGenerator {
             startManager();
         }
 
+        /// <summary>
+        /// Ελέγχει αν υπάρχουν τα βασικά αρχεία includes και fields
+        /// </summary>
         public void checkFilePaths() {
             if (!File.Exists(templatePath)) {
                 throw new Exception("Δεν βρέθηκε το αρχείο που περιέχει το κεντρικό τμήμα (main) του document");
@@ -68,6 +71,9 @@ namespace DocumentGenerator {
             }
         }
 
+        /// <summary>
+        /// Έναρξη του manager που θα φτιάξει το αρχείο. 
+        /// </summary>
         public void startManager() {
             bindingStack.Clear();
             DXDocuments.Manager manager = process(templatePath);
@@ -106,6 +112,7 @@ namespace DocumentGenerator {
                 //3.1 Για κάθε alias:
                 foreach (Token token in tokens) {
                     if (!token.Alias.StartsWith("!")) {
+                        //3.1.2 Αν δεν είναι include:
                         if (!token.Alias.StartsWith("include:")) {
                             //3.1.1 Αν είναι field:
                             BindingField field;
@@ -114,10 +121,16 @@ namespace DocumentGenerator {
                             if (fieldsIndex.TryGetValue(token.Alias, out field)) {
                                 //3.1.1.2 Αντικαθιστούμε το alias με το κείμενο
                                 int index = 0; // TODO: Να διαβάζει το index από το .docx
-                                manager.ReplaceRangeWithText(token.Range, dataSource.GetContextValue(field, index, bindingStack));
+                                if(field.Type.Name == "Byte[]") {
+                                    manager.ReplaceTextWithImage(token.Range.Value, dataSource.GetContextValue(field, index, bindingStack));
+                                } else {
+                                    manager.ReplaceRangeWithText(token.Range, dataSource.GetContextValue(field, index, bindingStack));
+                                }
+                                
                             }
-                        } else {
-                            //3.1.2 Αν είναι include:
+                        } 
+                        else {
+                            //3.1.2 Αν είναι include το αρχείο τότε θα παρσάρει τα include:
                             BindingInclude include;
                             int start = token.Alias.IndexOf("\"") + 1;
                             int end = token.Alias.IndexOf("\"", start);
@@ -356,5 +369,6 @@ namespace DocumentGenerator {
             }
         }
 
+       
     }
 }
