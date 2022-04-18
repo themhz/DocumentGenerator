@@ -107,7 +107,7 @@ namespace DocumentGenerator.DXDocuments
 
             result = document.FindAll(r, searchRange);
             for (int i = 0; i < result.Length; i++) {
-                dxRange aliasRange = result[i]; // ΕΙΝΑΙ ΛΑΘΟΣ: document.CreateRange(result[i].Start.ToInt(), result[i].End.ToInt());
+                dxRange aliasRange = result[i];
                 string text = document.GetText(aliasRange).Trim();
                 if (text != string.Empty && !text.StartsWith("{!")) {
                     text = text.Replace("{", "");
@@ -307,6 +307,10 @@ namespace DocumentGenerator.DXDocuments
                     }
                 }
             }
+
+            // Copy footer
+            dxRange footerRange = getRowsRange(table.Element, table.HeaderCount + table.BodyCount, table.FooterCount);
+            _wordProcessor.Document.InsertDocumentContent(lastRange.End, footerRange, DevExpress.XtraRichEdit.API.Native.InsertOptions.KeepSourceFormatting);
 
             _wordProcessor.Document.ReplaceAll("{{newTable}}", " ", DevExpress.XtraRichEdit.API.Native.SearchOptions.None, _wordProcessor.Document.Range);
             _wordProcessor.Document.Delete(comment.Table.Element.Range);

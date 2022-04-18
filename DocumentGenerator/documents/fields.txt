@@ -8,16 +8,73 @@
 				{"name":"Name", "alias":"aName", "format":""},
 				{"name":"RecNumber","alias":"RecNumber", "format":"{0:0}"},
 				{"name":"Image", "alias":"aImage"},
+				{"name":"Ri", "alias":"aRi"},
+				{"name":"R", "alias":"aR", "format":"{0:0.00}"},
+				{"name":"Ra", "alias":"aRa"},
+				{"name":"Rall", "alias":"aRall", "format":"{0:0.00}"},
+				{"name":"Thickness", "alias":"aThickness", "format":"{0:0.00}"},								
 			]
 		},
 		{
 			"table":"PageADetails",
 			"alias": "PageADetails",
 			"Fields":[
-				{"name":"ID", "alias":"aID"},
+				{"name":"ID", "alias":"paID"},
 				{"name":"Name", "alias":"paName"},
+				{"name":"Density", "alias":"aDensity"},
+				{"name":"d", "alias":"ad"},
+				{"name":"λ", "alias":"aλ"},
+				{"name":"dλ", "alias":"adλ"},				
+			]
+		},
+		{
+			"table":"Projects",
+			"alias": "Projects",
+			"Fields":[
+				{"name":"ProjectName", "alias":"aProjectName"},
+				{"name":"Address1", "alias":"aAddress1"},
+				{"name":"SolutionEngineersSynopsis", "alias":"aSolutionEngineersSynopsis"},
+				{"name":"SolutionPrintedYear", "alias":"aSolutionPrintedYear"},
+				{"name":"TEECurrentVersion", "alias":"aTEECurrentVersion"},
+				{"name":"TEESN", "alias":"aTEESN"},
+				{"name":"SoftwareName", "alias":"aSoftwareName"},
+				{"name":"EnergyBuildingRegistrationNumber", "alias":"aEnergyBuildingRegistrationNumber"},
+				{"name":"EnergyBuildingVersion", "alias":"aEnergyBuildingVersion"},
+				{"name":"EnergyBuildingSN", "alias":"aEnergyBuildingSN"},			
 			]
 
-		}		
+		},
+		{
+			"table":"BuildingsGeneral",
+			"alias": "BuildingsGeneral",
+			"Fields":[
+				{"name":"CityID", "alias":"aCityID"},
+				{"name":"Elevation", "alias":"aElevation"},
+				{"name":"ClimaticZoneName", "alias":"aClimaticZoneName"},
+				{"name":"RecNumber", "alias":"aRecNumber"},
+				{"name":"Name", "alias":"bgaName"},
+
+			]
+		},
+		{
+			"table":"SpecialAttributes",
+			"alias": "SpecialAttributes",
+			"Fields":[
+				{"name":"FT", "alias":"aFT"},
+				{"name":"FW", "alias":"aFW"},
+				{"name":"FR", "alias":"aFR"},
+				{"name":"FFB", "alias":"aFFB"},
+				{"name":"FFU", "alias":"aFFU"},
+				{"name":"FFA", "alias":"aFFA"},
+				{"name":"FTU", "alias":"aFTU"},
+				{"name":"FTB", "alias":"aFTB"},
+				{"name":"FGF", "alias":"aFGF"},
+				{"name":"F", "alias":"aF"},
+				{"name":"BuildingVolume", "alias":"aBuildingVolume"},
+				{"name":"FV", "alias":"aFV"},
+				{"name":"Umax", "alias":"aUmax"},
+			]
+
+		}
 	]
 }

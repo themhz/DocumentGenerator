@@ -327,7 +327,7 @@ namespace DocumentGenerator {
                         BindingTable bindingTable = null;
                         //if (!tablesIndex.TryGetValue(includeTable, out bindingTable)) {
 
-                        if (tablesIndex.ContainsKey(includeTable)) {
+                        if (includeTable!= null && tablesIndex.ContainsKey(includeTable)) {
                             bindingTable = tablesIndex[includeTable];
                         }
 

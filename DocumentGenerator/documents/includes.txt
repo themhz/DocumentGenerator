@@ -3,13 +3,12 @@
 	[
 		{
 			"file":	"PageA.docx",
-			"alias": "template",
-			"table": "PageA"
+			"alias": "PageAtemplate",
 		},
 		{
 			"file":	"PageADetails.docx",
-			"alias": "template2",			
-			"table": "PageADetails"
+			"alias": "PageADetailstemplate",			
+			"table": "PageA"
 		}
 	]
 }

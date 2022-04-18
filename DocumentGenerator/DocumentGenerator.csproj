@@ -94,6 +94,7 @@
       <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
     </None>
     <None Include="documents\PageA.docx" />
+    <None Include="documents\PageA_old.docx" />
     <None Include="documents\Main.docx" />
     <None Include="documents\energyBuilding\Main.docx" />
     <None Include="documents\energyBuilding\PageADetails.docx" />
