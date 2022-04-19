@@ -6,11 +6,11 @@
 			"alias": "PageA",
 			"Fields":[
 				{"name":"Name", "alias":"aName", "format":""},
-				{"name":"RecNumber","alias":"RecNumber", "format":"{0:0}"},
+				{"name":"RecNumber","alias":"RecNumber", "format":"{0:0.00}"},
 				{"name":"Image", "alias":"aImage"},
-				{"name":"Ri", "alias":"aRi"},
+				{"name":"Ri", "alias":"aRi", "format":"{0:0.00}"},
 				{"name":"R", "alias":"aR", "format":"{0:0.00}"},
-				{"name":"Ra", "alias":"aRa"},
+				{"name":"Ra", "alias":"aRa", "format":"{0:0.00}"},
 				{"name":"Rall", "alias":"aRall", "format":"{0:0.00}"},
 				{"name":"Thickness", "alias":"aThickness", "format":"{0:0.00}"}				
 			]
@@ -21,10 +21,10 @@
 			"Fields":[
 				{"name":"ID", "alias":"paID"},
 				{"name":"Name", "alias":"paName"},
-				{"name":"Density", "alias":"aDensity"},
-				{"name":"d", "alias":"ad"},
-				{"name":"λ", "alias":"aλ"},
-				{"name":"dλ", "alias":"adλ"},				
+				{"name":"Density", "alias":"aDensity", "format":"{0:0.00}"},
+				{"name":"d", "alias":"ad", "format":"{0:0.00}"},
+				{"name":"λ", "alias":"aλ", "format":"{0:0.00}"},
+				{"name":"dλ", "alias":"adλ", "format":"{0:0.00}"},				
 			]
 		},
 		{
@@ -81,13 +81,13 @@
 			"alias": "Slabs",
 			"Fields":[
 				{"name":"Name", "alias":"staName"},
-				{"name":"HeatInsulationRecNumber", "alias":"staHeatInsulationRecNumber"},
-				{"name":"K", "alias":"staK"},
-				{"name":"Area", "alias":"staArea"},
-				{"name":"P", "alias":"staP"},				
-				{"name":"B", "alias":"staB"},
-				{"name":"GroundDeep", "alias":"staGroundDeep"},				
-				{"name":"K2", "alias":"staK2"},
+				{"name":"HeatInsulationRecNumber", "alias":"staHeatInsulationRecNumber", "format":"{0:0.00}"},
+				{"name":"K", "alias":"staK", "format":"{0:0.00}"},
+				{"name":"Area", "alias":"staArea", "format":"{0:0.00}"},
+				{"name":"P", "alias":"staP", "format":"{0:0.00}"},				
+				{"name":"B", "alias":"staB", "format":"{0:0.00}"},
+				{"name":"GroundDeep", "alias":"staGroundDeep", "format":"{0:0.00}"},				
+				{"name":"K2", "alias":"staK2", "format":"{0:0.00}"},
 			]
 		}
 	]
