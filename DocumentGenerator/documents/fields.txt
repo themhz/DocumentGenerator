@@ -75,6 +75,20 @@
 				{"name":"Umax", "alias":"aUmax"},
 			]
 
+		},
+		{
+			"table":"Slabs",
+			"alias": "Slabs",
+			"Fields":[
+				{"name":"Name", "alias":"staName"},
+				{"name":"HeatInsulationRecNumber", "alias":"staHeatInsulationRecNumber"},
+				{"name":"K", "alias":"staK"},
+				{"name":"Area", "alias":"staArea"},
+				{"name":"P", "alias":"staP"},				
+				{"name":"B", "alias":"staB"},
+				{"name":"GroundDeep", "alias":"staGroundDeep"},				
+				{"name":"K2", "alias":"staK2"},
+			]
 		}
 	]
 }

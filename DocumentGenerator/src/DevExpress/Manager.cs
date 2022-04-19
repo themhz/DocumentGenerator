@@ -73,10 +73,8 @@ namespace DocumentGenerator.DXDocuments
             }
         }
 
-        public void Save(string fileName) {
-            //Console.WriteLine("Saving file report");
-            _wordProcessor.SaveDocument(fileName, DocumentFormat.OpenXml);
-            //Console.WriteLine("Report save in :" + TemplatePathGenerated);
+        public void Save(string fileName) {            
+            _wordProcessor.SaveDocument(fileName, DocumentFormat.OpenXml);            
         }
 
         public static void ShowFile(string fileName) {

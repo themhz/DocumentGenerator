@@ -9,6 +9,10 @@
 			"file":	"PageADetails.docx",
 			"alias": "PageADetailstemplate",			
 			"table": "PageA"
-		}
+		},
+		{
+			"file":	"Slabs.docx",
+			"alias": "Slabs",
+		},
 	]
 }

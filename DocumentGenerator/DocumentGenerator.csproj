@@ -95,6 +95,8 @@
     <None Include="documents\datasets\dsBuildingHeatInsulation.xss">
       <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
     </None>
+    <None Include="documents\Chap3.docx" />
+    <None Include="documents\Slabs.docx" />
     <None Include="documents\PageA.docx" />
     <None Include="documents\PageA_old.docx" />
     <None Include="documents\Main.docx" />
