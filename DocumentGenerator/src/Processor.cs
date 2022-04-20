@@ -170,17 +170,7 @@ namespace DocumentGenerator
                         //3.1.1.1 Ελέγχουμε αν το alias είναι έγκυρο
                         if (fieldsIndex.TryGetValue(token.Alias, out BindingField field))
                         {
-                            //3.1.1.2 Αντικαθιστούμε το alias με το κείμενο
-                            int index = 0; // TODO: Να διαβάζει το index από το .docx
-                            if (field.Type.Name == "Byte[]")
-                            {
-                                manager.ReplaceTextWithImage(token.Range.Value, dataSource.GetContextValue(field, index, bindingStack));
-                            }
-                            else
-                            {
-                                manager.ReplaceRangeWithText(token.Range, dataSource.GetContextValue(field, index, bindingStack));
-                            }
-
+                            ReplaceToken(manager, token, field);
                         }
                     }
                     else
@@ -197,37 +187,12 @@ namespace DocumentGenerator
 
                             if (include.Table != null)
                             {
-                                BindingTable.Row row;
-                                BindingTable.Enumerator enumerator = new BindingTable.Enumerator(bindingTable);
-
-                                enumerator.Start();
-                                while ((row = enumerator.Next()) != null)
-                                { // TODO: use index for performance
-                                    if (row.InContext(bindingStack))
-                                    {
-                                        //3.1.2.1.1 Καλούμε την process() ->
-                                        Manager subManager = process(getFilePath(fileName, include.File), row);
-
-                                        //3.1.2.1.2 Το παραγόμενο document το εισάγουμε στο τρέχον document
-                                        manager.ReplaceRangeWithContent(subManager, token.Range);
-                                        manager.ReplacePageBreakToken(enumerator.Remaining == 0);
-                                    }
-                                }
+                                ReplaceTokenWithTable(fileName, manager, token, include, bindingTable);
                             }
                             else
                             {
                                 //3.1.2.1.1 Καλούμε την process() ->
-                                Manager subManager = process(getFilePath(fileName, include.File), null);
-
-                                if (subManager != null)
-                                {
-                                    //3.1.2.1.2 Το παραγόμενο document το εισάγουμε στο τρέχον document
-                                    manager.ReplaceRangeWithContent(subManager, token.Range);
-
-                                    subManager.Close();
-                                    //subManager.Save(savePath);
-                                    subManager.Dispose();
-                                }
+                                ReplaceTokenWithTemplate(fileName, manager, token, include);
                             }
                         }
                         else
@@ -236,6 +201,55 @@ namespace DocumentGenerator
                         }
                     }
                 }
+            }
+        }
+
+        private void ReplaceTokenWithTemplate(string fileName, Manager manager, Token token, BindingInclude include)
+        {
+            Manager subManager = process(getFilePath(fileName, include.File), null);
+
+            if (subManager != null)
+            {
+                //3.1.2.1.2 Το παραγόμενο document το εισάγουμε στο τρέχον document
+                manager.ReplaceRangeWithContent(subManager, token.Range);
+
+                subManager.Close();
+                //subManager.Save(savePath);
+                subManager.Dispose();
+            }
+        }
+
+        private void ReplaceTokenWithTable(string fileName, Manager manager, Token token, BindingInclude include, BindingTable bindingTable)
+        {
+            BindingTable.Row row;
+            BindingTable.Enumerator enumerator = new BindingTable.Enumerator(bindingTable);
+
+            enumerator.Start();
+            while ((row = enumerator.Next()) != null)
+            { // TODO: use index for performance
+                if (row.InContext(bindingStack))
+                {
+                    //3.1.2.1.1 Καλούμε την process() ->
+                    Manager subManager = process(getFilePath(fileName, include.File), row);
+
+                    //3.1.2.1.2 Το παραγόμενο document το εισάγουμε στο τρέχον document
+                    manager.ReplaceRangeWithContent(subManager, token.Range);
+                    manager.ReplacePageBreakToken(enumerator.Remaining == 0);
+                }
+            }
+        }
+
+        private void ReplaceToken(Manager manager, Token token, BindingField field)
+        {
+            //3.1.1.2 Αντικαθιστούμε το alias με το κείμενο
+            int index = 0; // TODO: Να διαβάζει το index από το .docx
+            if (field.Type.Name == "Byte[]")
+            {
+                manager.ReplaceTextWithImage(token.Range.Value, dataSource.GetContextValue(field, index, bindingStack));
+            }
+            else
+            {
+                manager.ReplaceRangeWithText(token.Range, dataSource.GetContextValue(field, index, bindingStack));
             }
         }
 
