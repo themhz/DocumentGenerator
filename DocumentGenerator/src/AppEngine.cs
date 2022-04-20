@@ -24,7 +24,6 @@ namespace DocumentGenerator {
             List<DataSet> dataSets = new List<DataSet>();
             DataSet dataSet = new DataSet();
             dataSet.ReadXmlSchema(dataSetPathSchema);
-
             dataSet.ReadXml(dataSetPath);
             dataSets.Add(dataSet);
 
