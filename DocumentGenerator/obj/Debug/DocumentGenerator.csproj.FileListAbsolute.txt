@@ -42,3 +42,8 @@ C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\obj\Debug\Docum
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\obj\Debug\DocumentGenerator.csproj.AssemblyReference.cache
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\Serilog.dll
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\Serilog.xml
+C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\Serilog.Sinks.Console.dll
+C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\Serilog.Sinks.File.dll
+C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\Serilog.Sinks.Console.xml
+C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\Serilog.Sinks.File.pdb
+C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\Serilog.Sinks.File.xml

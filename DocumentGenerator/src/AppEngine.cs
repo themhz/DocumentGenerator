@@ -3,6 +3,12 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using Serilog;
+using Serilog.Configuration;
+using Serilog.Context;
+using Serilog.Parsing;
+
+
 
 namespace DocumentGenerator {
     internal class AppEngine {
@@ -19,6 +25,10 @@ namespace DocumentGenerator {
             string includesPath = @"../../documents/includes.txt";
             string dataSetPath = @"../../documents/datasets/dataEnergyBuilding.xml";
             string dataSetPathSchema = @"../../documents/datasets/dsBuildingHeatInsulation.xsd";
+            var log = new LoggerConfiguration()
+           .WriteTo.Console()
+           .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day)
+           .CreateLogger();
 
             //Φορτώνουμε το dataset
             List<DataSet> dataSets = new List<DataSet>();
@@ -28,6 +38,10 @@ namespace DocumentGenerator {
             dataSets.Add(dataSet);
 
             IDataSource dataSource = new Xml(dataSets);
+
+         
+
+
             //Ενεργοποιούμε τον επεξεργαστή εγγράφων
             Processor processor = new Processor(originalDocument, fieldsPath, includesPath, generatedDocument, dataSource);
             processor.start();

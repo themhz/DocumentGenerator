@@ -16,6 +16,8 @@ using dxSubDocument = DevExpress.XtraRichEdit.API.Native.SubDocument;
 using dxImageSource = DevExpress.XtraRichEdit.API.Native.DocumentImageSource;
 using System.IO;
 using DocumentGenerator.Helpers;
+using Serilog;
+
 
 namespace DocumentGenerator.DXDocuments
 {

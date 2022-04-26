@@ -78,7 +78,6 @@ namespace DocumentGenerator
                 throw new Exception("Δεν βρέθηκε το αρχείο που περιέχει τα fields του (main) document");
             }
         }
-
         /// <summary>
         /// Έναρξη του manager που θα φτιάξει το αρχείο. 
         /// </summary>
