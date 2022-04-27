@@ -47,3 +47,6 @@ C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\Seril
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\Serilog.Sinks.Console.xml
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\Serilog.Sinks.File.pdb
 C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\Serilog.Sinks.File.xml
+C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\Loger.dll
+C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\Loger.pdb
+C:\Users\themis\source\repos\DocumentGenerator\DocumentGenerator\bin\Debug\Loger.dll.config

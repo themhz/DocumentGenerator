@@ -4,9 +4,9 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using DevExpress.XtraRichEdit;
-//using DevExpress.XtraRichEdit.API.Native;
 using Newtonsoft.Json.Linq;
 using DocumentGenerator.DXDocuments;
+
 
 namespace DocumentGenerator
 {
@@ -23,7 +23,7 @@ namespace DocumentGenerator
         protected Dictionary<string, BindingField> fieldsIndex;
         protected Dictionary<string, BindingTable> tablesIndex;
         protected Dictionary<string, BindingInclude> includesIndex;
-        protected IDataSource dataSource = null;
+        protected IDataSource dataSource = null;        
 
         protected Manager manager = null;
 
@@ -41,7 +41,7 @@ namespace DocumentGenerator
             bindingTables = new List<BindingTable>();
             bindingIncludes = new List<BindingInclude>();
             bindingStack = new List<BindingTable.Row>();
-
+           
             dataSource = _dataSource;
         }
 
@@ -51,7 +51,7 @@ namespace DocumentGenerator
         public void start()
         {
             // 1. Φορτώνουμε τα Json από {{κάποιο path (fields.txt, parts.txt)}} και μαζεύουμε τα {aliases}
-
+            
             // Ελέγχουμε αν υπάρχουν τα αρχεία
             checkFilePaths();
             // Διαβάζουμε τα πεδία από τα json
@@ -67,14 +67,16 @@ namespace DocumentGenerator
         /// Ελέγχει αν υπάρχουν τα βασικά αρχεία includes και fields
         /// </summary>
         public void checkFilePaths()
-        {
+        {            
             if (!File.Exists(templatePath))
-            {
+            {                
+                Log.Error("Δεν βρέθηκε το αρχείο που περιέχει το κεντρικό τμήμα (main) του document");
                 throw new Exception("Δεν βρέθηκε το αρχείο που περιέχει το κεντρικό τμήμα (main) του document");
             }
 
             if (!File.Exists(fieldsPath))
             {
+                Log.Error("Δεν βρέθηκε το αρχείο που περιέχει τα fields του (main) document");
                 throw new Exception("Δεν βρέθηκε το αρχείο που περιέχει τα fields του (main) document");
             }
         }
@@ -149,8 +151,8 @@ namespace DocumentGenerator
                     manager.PopulateTable(comment, table, bindingStack);
                 }
                 else
-                {
-                    // TODO: Log
+                {                    
+                    Log.Warning("Τα σχόλια δεν περιέχουν δεδομένα για πίνακα ", comment, table, bindingStack);
                 }
             }
         }
@@ -197,6 +199,7 @@ namespace DocumentGenerator
                         else
                         {
                             //TODO: Log
+                            Log.Warning("Τα σχόλια δεν περιέχουν δεδομένα για πίνακα ", alias);
                         }
                     }
                 }
@@ -257,8 +260,11 @@ namespace DocumentGenerator
             string dir = Path.GetFullPath(Path.GetDirectoryName(currentFile));
             string path = Path.Combine(dir, fileName);
             if (!File.Exists(path))
+            {
+                Log.Error($"File '{path}' doesn't exist", $"currentFile '{currentFile}'", $"fileName '{fileName}' ");
                 throw new Exception($"File '{path}' doesn't exist");
-
+            }
+                
             return path;
         }
 
@@ -270,7 +276,6 @@ namespace DocumentGenerator
 
             // Check the fields files
             var jsonTables = checkFieldsFile();
-
 
             // For each table in the file
             foreach (JObject jsonTable in jsonTables)
@@ -302,7 +307,8 @@ namespace DocumentGenerator
         {
             if (tableName == null || tableName == string.Empty)
             {
-                throw new Exception("Initialize fields: A table has no name or is empty");
+                Log.Error("Initialize fields: A table has no name or is empty");
+                throw new Exception("Initialize fields: A table has no name or is empty");                
             }
         }
 
@@ -319,6 +325,7 @@ namespace DocumentGenerator
 
                     if (fieldName == null || fieldName == string.Empty)
                     {
+                        Log.Error("Initialize fields: A table has no name or is empty");
                         throw new Exception("Initialize fields: A table has no name or is empty");
                     }
 
@@ -337,7 +344,11 @@ namespace DocumentGenerator
                     {
                         bindingField = dataSource.GetField(bindingTable, fieldName, fieldAlias, fieldFormat ?? string.Empty, fieldFormatNull ?? string.Empty);
                         if (bindingField == null)
+                        {
+                            Log.Error($"Το πεδίο '{bindingTable.Name}.{fieldName}' δεν βρέθηκε στους πίνακες της εφαρμογής");
                             throw new Exception($"Το πεδίο '{bindingTable.Name}.{fieldName}' δεν βρέθηκε στους πίνακες της εφαρμογής");
+                        }
+                            
                         else
                         {
                             fieldsIndex.Add(bindingField.Alias, bindingField);
@@ -346,21 +357,24 @@ namespace DocumentGenerator
                     }
                     else
                     {
+                        Log.Error($"Το alias '{fieldAlias}' υπάρχει ήδη ως κλειδί");
                         throw new Exception($"Το alias '{fieldAlias}' υπάρχει ήδη ως κλειδί");
                     }
-
                 }
             }
             else
             {
+                Log.Error(String.Format("Initialize fields: Fields are missing from table {0}", tableName));
                 throw new Exception(String.Format("Initialize fields: Fields are missing from table {0}", tableName));
             }
         }
+
         private BindingTable _createBindingTable(string tableName, string tableAlias)
         {
             BindingTable bindingTable = dataSource.GetTable(tableName, tableAlias);
             if (bindingTable == null)
             {
+                Log.Error($"Table '{tableName}' doesn't exist");
                 throw new Exception($"Table '{tableName}' doesn't exist");
             }
             else
@@ -382,6 +396,7 @@ namespace DocumentGenerator
             // Αν το περιεχώμενο δεν υπάρχει προφανός έχουμε πρόβλημα
             if (content == null)
             {
+                Log.Error("Initialize fields: File is missing", fieldsPath);
                 throw new Exception("Initialize fields: File is missing");
             }
 
@@ -389,6 +404,7 @@ namespace DocumentGenerator
             JObject json = this.jsonParse(content);
             if (json == null)
             {
+                Log.Error("Initialize fields: content is missing");
                 throw new Exception("Initialize fields: content is missing");
             }
 
@@ -396,6 +412,7 @@ namespace DocumentGenerator
             var jsonTables = json.GetValue("Tables");
             if (jsonTables == null)
             {
+                Log.Error("Initialize fields: Tables list is missing", json);
                 throw new Exception("Initialize fields: 'Tables' list is missing");
             }
 
@@ -408,6 +425,7 @@ namespace DocumentGenerator
 
             if (content == null)
             {
+                Log.Error("Initialize includes: File is missing", includesPath);
                 throw new Exception("Initialize includes: File is missing");
             }
 
@@ -415,6 +433,7 @@ namespace DocumentGenerator
 
             if (json == null)
             {
+                Log.Error("Initialize fields: File has not valid 'json' format", content);
                 throw new Exception("Initialize fields: File has not valid 'json' format"); 
             }
 
@@ -442,6 +461,7 @@ namespace DocumentGenerator
             }
             else
             {
+                Log.Error("Initialize fields: 'Tables' list is missing", json);
                 throw new Exception("Initialize fields: 'Tables' list is missing");
             }
         }
@@ -474,7 +494,10 @@ namespace DocumentGenerator
             string includeDir = Path.GetDirectoryName(templatePath);
             string includePath = Path.Combine(includeDir, includeFile);
             if (!File.Exists(includePath))
+            {
+                Log.Error($"file '{includePath}' doesn't exist", jsonInclude);
                 throw new Exception($"file '{includePath}' doesn't exist");
+            }
             return includeFile;
         }
 
@@ -484,6 +507,7 @@ namespace DocumentGenerator
 
             if (includeAlias == null || includeAlias == string.Empty)
             {
+                Log.Error("Initialize includes: an alias is missing or is empty");
                 throw new Exception("Initialize includes: an alias is missing or is empty");
             }
 
@@ -504,6 +528,7 @@ namespace DocumentGenerator
             }
             catch (Exception)
             {
+                Log.Error($"text is not in json format {text}");
                 return null;
             }
         }

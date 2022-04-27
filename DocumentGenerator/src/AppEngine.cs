@@ -17,6 +17,7 @@ namespace DocumentGenerator {
         }
 
         internal void run() {
+            
 
             //Φορτώνουμε τις διαδρομές για τα αρχεία που θα χρησιμοποιήσει το σύστημα
             string originalDocument = @"../../documents/Main.docx";
@@ -25,10 +26,11 @@ namespace DocumentGenerator {
             string includesPath = @"../../documents/includes.txt";
             string dataSetPath = @"../../documents/datasets/dataEnergyBuilding.xml";
             string dataSetPathSchema = @"../../documents/datasets/dsBuildingHeatInsulation.xsd";
-            var log = new LoggerConfiguration()
-           .WriteTo.Console()
-           .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day)
-           .CreateLogger();
+
+           // var log = new LoggerConfiguration()
+           //.WriteTo.Console()
+           //.WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day)
+           //.CreateLogger();
 
             //Φορτώνουμε το dataset
             List<DataSet> dataSets = new List<DataSet>();
