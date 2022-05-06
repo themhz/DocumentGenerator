@@ -286,7 +286,7 @@ namespace DocumentGenerator.DXDocuments
                 }
             }
 
-            // Copy footer
+            // Copy footer            
             dxRange footerRange = getRowsRange(table.Element, table.HeaderCount + table.BodyCount, table.FooterCount);
             _wordProcessor.Document.InsertDocumentContent(lastRange.End, footerRange, DevExpress.XtraRichEdit.API.Native.InsertOptions.KeepSourceFormatting);
 
@@ -302,6 +302,10 @@ namespace DocumentGenerator.DXDocuments
         /// <param name="rowCount">how many rows</param>
         /// <returns></returns>
         protected dxRange getRowsRange(dxTable table, int rowIndex, int rowCount) {
+            if(rowIndex == 4)
+            {
+                Console.WriteLine();
+            }
             dxPosition start = table.Rows[rowIndex].Range.Start;
             dxPosition end = table.Rows[rowIndex + rowCount - 1].Range.End;
             int length = end.ToInt() - start.ToInt();

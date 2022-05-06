@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -23,7 +24,8 @@ namespace DocumentGenerator
         protected Dictionary<string, BindingField> fieldsIndex;
         protected Dictionary<string, BindingTable> tablesIndex;
         protected Dictionary<string, BindingInclude> includesIndex;
-        protected IDataSource dataSource = null;        
+        protected IDataSource dataSource = null;
+        
 
         protected Manager manager = null;
 
@@ -50,8 +52,10 @@ namespace DocumentGenerator
         /// </summary>
         public void start()
         {
-            // 1. Φορτώνουμε τα Json από {{κάποιο path (fields.txt, parts.txt)}} και μαζεύουμε τα {aliases}
+
             
+            // 1. Φορτώνουμε τα Json από {{κάποιο path (fields.txt, parts.txt)}} και μαζεύουμε τα {aliases}
+
             // Ελέγχουμε αν υπάρχουν τα αρχεία
             checkFilePaths();
             // Διαβάζουμε τα πεδία από τα json
@@ -346,9 +350,8 @@ namespace DocumentGenerator
                         if (bindingField == null)
                         {
                             Log.Error($"Το πεδίο '{bindingTable.Name}.{fieldName}' δεν βρέθηκε στους πίνακες της εφαρμογής");
-                            throw new Exception($"Το πεδίο '{bindingTable.Name}.{fieldName}' δεν βρέθηκε στους πίνακες της εφαρμογής");
-                        }
-                            
+                            //throw new Exception($"Το πεδίο '{bindingTable.Name}.{fieldName}' δεν βρέθηκε στους πίνακες της εφαρμογής");
+                        }                            
                         else
                         {
                             fieldsIndex.Add(bindingField.Alias, bindingField);
@@ -362,7 +365,7 @@ namespace DocumentGenerator
                     }
                 }
             }
-            else
+            else 
             {
                 Log.Error(String.Format("Initialize fields: Fields are missing from table {0}", tableName));
                 throw new Exception(String.Format("Initialize fields: Fields are missing from table {0}", tableName));
