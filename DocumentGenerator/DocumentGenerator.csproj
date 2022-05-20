@@ -33,17 +33,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Data.v21.2, Version=21.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\DevExpress 21.2\Components\Bin\Framework\DevExpress.Data.v21.2.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.Office.v21.2.Core, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.Office.v21.2.Core, Version=21.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\DevExpress 21.2\Components\Bin\Framework\DevExpress.Office.v21.2.Core.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.RichEdit.v21.2.Core, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+    <Reference Include="DevExpress.RichEdit.v21.2.Core, Version=21.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\DevExpress 21.2\Components\Bin\Framework\DevExpress.RichEdit.v21.2.Core.dll</HintPath>
+      
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -106,6 +106,7 @@
       <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
     </None>
     <None Include="documents\Chap3.docx" />
+    <None Include="documents\rptAnnex4A.docx" />
     <None Include="documents\rptAnnex4.docx" />
     <None Include="documents\Slabs.docx" />
     <None Include="documents\PageA.docx" />

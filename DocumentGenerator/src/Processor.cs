@@ -60,10 +60,9 @@ namespace DocumentGenerator
             checkFilePaths();
             // Διαβάζουμε τα πεδία από τα json
             readFields();
-
             // Διαβάζουμε τα includes
             readIncludes();
-
+            // Έναρξη Manager
             startManager();
         }
 
