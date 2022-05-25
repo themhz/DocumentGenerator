@@ -51,7 +51,7 @@ namespace DocumentGenerator {
             //3.Καλούμε την επεξεργασία του document(master template)
             //3.0 Προσθέτουμε το τρέχον ID στο context stack (μαζί με τον πίνακα) *
             //3.1 Συλλέγουμε τα aliases από το document και τα επιβεβαιώνουμε αν είναι έγκυρα
-            `
+            
             //3.2 Για κάθε alias:
             //3.2.1 Αν είναι field αντικαθιστούμε το κείμενο
             //3.2.2 Αν είναι include:

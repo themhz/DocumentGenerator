@@ -1,0 +1,30 @@
+PageBLevelFaces->OpaqueVerticalElementTotals->ThermalBridgeElements
+
+Projects = Μελέτες
+PageA = Τύποι δομικών στοιχείων 
+PageADetails = Στρώσεις για κάθε τύπο δομικών στοιχείων
+PageBLevelFaces = Όψεις
+PageBLevelFaceElements = ύποι δομικών στοιχείων που υπάρχει από κάθε όψη
+PageBLevels = Όροφοι
+PageCBuildings = Το κτήριο ή τα κτήρια της μελέτης
+SpecialAttributes = Ειδικοί συντελεστές
+BuildingsGeneral = Γενικά στοιχεία κτηρίου όπως κλιματική ζώνη
+Slabs = Τα δάπεδα - Πλάκα
+OpaqueVerticalElementTotals = Σύνολα για κάθετα Αδιαφανή στοιχεία όπως (Τοιχοποιία, Δοκός/Υποστύλωμα/Τοίχωμα) ???
+OpaqueVerticalElementLevelTotals = Σύνολα ορόφου ???
+ThermalBridgesLevelTotals = στοιχείο για εσωτερικούς υπολογισμούς του συστήματος (Δεν φάινετε στο document) ???
+ThermalBridgeElements = Θερμογέφυρες 
+ThermalBridgeElementsTotals = Συγκεντροτικά Θερμογέφυρες ???
+HorizontalElements = οριζόντια δομικά στοιχεία (Δάπεδα και οροφές)
+HorizontalLevelElements = ??
+HorizontalLevels = Κατόψις ορόφων
+Annex5HorizontalElementsTotals = Συγκεντρωτικά στοιχεία για τα αδιαφανή οριζόντια στοιχεία για τον έλεγχο θερμομονωτικής επάρκειας
+Projects = Μελέτη
+Annex4VerticalOpaqueElements = Κατακόρυφα αδιαφανή δομικά στοιχεία 
+PageAThermalBridges = θερμογέφυρες
+ThermalBridgeLevels = κατόψεις των θερμογεφυρών
+ThermalBridgeTotals = πίνακες των θερμογεφυρών
+ThermalBridgeTotalGroups = Τίτλοι ομάδων Θερμογεφυρών
+BuildingVerificationElements=
+
+FloorElements = κεφάλαιο 9 Υπολογισμός μέγιστου επιτρεπτού και πραγματοποιήσιμου Um του κτηρίου ->Εμβαδό Ισόγειο
