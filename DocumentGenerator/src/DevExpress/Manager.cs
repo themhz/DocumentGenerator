@@ -294,6 +294,66 @@ namespace DocumentGenerator.DXDocuments
             _wordProcessor.Document.Delete(comment.Table.Element.Range);
         }
 
+        public void PopulateGroupingTable(Comment comment, BindingTable bindingTable, List<BindingTable.Row> contextStack)
+        { 
+            Table table = comment.Table;
+            DataTable dataTable = bindingTable.DataTable;
+
+            // Delete comment
+            _wordProcessor.Document.Delete(comment.Range.Value);
+
+            // Insert <newline> after the table to create space for the new table                       
+            _wordProcessor.Document.InsertText(table.Element.Range.End, DevExpress.Office.Characters.LineBreak.ToString());
+            var newTableRange = _wordProcessor.Document.InsertText(table.Element.Range.End, "{{newTable}}");
+
+            // Copy header
+            var headerRange = getRowsRange(table.Element, 0, table.HeaderCount);
+            _wordProcessor.Document.InsertDocumentContent(newTableRange.End, headerRange, DevExpress.XtraRichEdit.API.Native.InsertOptions.KeepSourceFormatting);
+
+            // Copy body <n> times
+            var bodyRange = getRowsRange(table.Element, table.HeaderCount, table.BodyCount);
+
+            BindingTable.Row row;
+            BindingTable.Enumerator enumerator = new BindingTable.Enumerator(bindingTable);
+            dxRange lastRange = newTableRange;
+
+            enumerator.Start();
+            while ((row = enumerator.Next()) != null)
+            { // TODO: use index for performance
+                if (row.InContext(contextStack))
+                {
+                    lastRange = _wordProcessor.Document.InsertDocumentContent(lastRange.End, bodyRange, DevExpress.XtraRichEdit.API.Native.InsertOptions.KeepSourceFormatting);
+
+                    foreach (Token token in table.Tokens)
+                    {
+                        //3.1.1 Αν είναι field:
+                        BindingField field = bindingTable.BindingFields.Find((BindingField f) => token.Alias == f.Alias || token.Alias == f.FullName);
+
+                        //3.1.1.1 Ελέγχουμε αν το alias είναι έγκυρο
+                        if (field != null)
+                        {
+                            //3.1.1.2 Βρίσκουμε την τιμή του field
+                            string text = row.GetValue(field, contextStack);
+
+                            //3.1.1.3 Αντικαθιστούμε το alias με το κείμενο
+                            replaceTextInRange($"{{{token.Original}}}", text, lastRange);
+                        }
+                        else
+                        {
+                            // TODO: Log
+                        }
+                    }
+                }
+            }
+
+            // Copy footer            
+            dxRange footerRange = getRowsRange(table.Element, table.HeaderCount + table.BodyCount, table.FooterCount);
+            _wordProcessor.Document.InsertDocumentContent(lastRange.End, footerRange, DevExpress.XtraRichEdit.API.Native.InsertOptions.KeepSourceFormatting);
+
+            _wordProcessor.Document.ReplaceAll("{{newTable}}", " ",DevExpress.XtraRichEdit.API.Native.SearchOptions.None, _wordProcessor.Document.Range);
+            _wordProcessor.Document.Delete(comment.Table.Element.Range);
+        }
+
         /// <summary>
         /// Gets the row range
         /// </summary>
@@ -361,5 +421,8 @@ namespace DocumentGenerator.DXDocuments
             _wordProcessor.Document.Delete(sourceRange);
             //this.wordProcessor.Document.Replace(targetRange, targetText);
         }
+
+
+
     }
 }

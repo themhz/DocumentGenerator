@@ -17,12 +17,7 @@
 		{
 			"file":	"rptAnnex4.docx",
 			"alias": "rptAnnex4",			
-			"table": "OpaqueVerticalElementTotals",
-		},
-		{
-			"file":	"rptAnnex4A.docx",
-			"alias": "rptAnnex4A",
-			"table":">ThermalBridgeElements"
-		},
+			"table": "PageBLevelFaces",
+		},		
 	]
 }

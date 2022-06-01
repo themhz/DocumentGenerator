@@ -125,7 +125,7 @@ namespace DocumentGenerator
                 //3.0 Προσθέτουμε το τρέχον ID στο context stack (μαζί με τον πίνακα) *
                 if (key != null) bindingStack.Add(key);
 
-                ParseAliases(fileName, manager, tokens);
+                ParseTokens(fileName, manager, tokens);
 
                 //3.1.3 Για κάθε πίνακα:
                 ParseComments(manager, comments);
@@ -145,13 +145,15 @@ namespace DocumentGenerator
             foreach (Comment comment in comments)
             {
                 //3.1.3.1 Καταγράφουμε τις παραμέτρους του comment
-                string tableName = comment.Text.Replace("Table:", "").Replace("\r\n", "");
+                //string tableName = comment.Text.Replace("Table:", "").Replace("\r\n", "");
+                JObject tableName = ConvertCommentToJson(comment.Text);
 
                 //3.1.3.2 Βρίσκουμε τον πίνακα που έχει τα δεδομένα                    
-                if (tablesIndex.TryGetValue(tableName, out BindingTable table))
+                if (tablesIndex.TryGetValue(tableName.GetValue("Table").ToString(), out BindingTable table))
                 {
                     //3.1.3.3 Παράγουμε τον πίνακα
-                    manager.PopulateTable(comment, table, bindingStack);
+                    var test = table;
+                    manager.PopulateGroupingTable(comment, table, bindingStack);
                 }
                 else
                 {                    
@@ -160,11 +162,27 @@ namespace DocumentGenerator
             }
         }
 
-        private void ParseAliases(string fileName, Manager manager, List<Token> tokens)
+        private JObject ConvertCommentToJson(String text)
         {
-            //3.1 Για κάθε alias:
+            string json = "";
+            string[] parts = text.Split(',');
+            for (int i=0; i < parts.Length; i++){
+                string[] keyValue = parts[i].Split(':');
+                json += keyValue[0] + ":\""+keyValue[1] + "\",";
+            }
+            json = "{" + json + "}";
+
+            JObject jsonObject = JObject.Parse(json);
+            //jsonObject.GetValue("type").ToString()
+            return jsonObject;        
+        }
+
+        private void ParseTokens(string fileName, Manager manager, List<Token> tokens)
+        {
+            //3.1 Για κάθε token (που λέγετε και alias):
             foreach (Token token in tokens)
             {
+                //Αν δεν αρχίζει με θαυμαστικό, γιατί αν αρχίζει τότε θα είναι τοκεν για πεδίο πίνακα που θα πρέπει να επαναλαμβάνεται
                 if (!token.Alias.StartsWith("!"))
                 {
                     //3.1.2 Αν δεν είναι include:
