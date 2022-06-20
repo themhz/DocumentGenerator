@@ -5,9 +5,8 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using DevExpress.XtraRichEdit;
-using Newtonsoft.Json.Linq;
 using DocumentGenerator.DXDocuments;
-
+using Newtonsoft.Json.Linq;
 
 namespace DocumentGenerator
 {
@@ -16,6 +15,7 @@ namespace DocumentGenerator
         protected string templatePath;
         protected string savePath;
         protected string fieldsPath;
+        protected string groupsPath;
         protected string includesPath;
 
         protected List<BindingTable> bindingTables;
@@ -25,15 +25,15 @@ namespace DocumentGenerator
         protected Dictionary<string, BindingTable> tablesIndex;
         protected Dictionary<string, BindingInclude> includesIndex;
         protected IDataSource dataSource = null;
-        
 
         protected Manager manager = null;
 
-        public Processor(string _templatePath, string _fieldsPath, string _includesPath, string _savePath, IDataSource _dataSource = null)
+        public Processor(string _templatePath, string _fieldsPath, string _groupsPath, string _includesPath, string _savePath, IDataSource _dataSource = null)
         {
             templatePath = _templatePath;
             savePath = _savePath;
             fieldsPath = _fieldsPath;
+            groupsPath = _groupsPath;
             includesPath = _includesPath;
 
             fieldsIndex = new Dictionary<string, BindingField>();
@@ -47,21 +47,27 @@ namespace DocumentGenerator
             dataSource = _dataSource;
         }
 
+        #region "   PROCESS   "
+
         /// <summary>
         /// Ενεργοποίηση του manager κατασκευής εγγράφου. 
         /// </summary>
         public void start()
         {
-
-            
             // 1. Φορτώνουμε τα Json από {{κάποιο path (fields.txt, parts.txt)}} και μαζεύουμε τα {aliases}
 
             // Ελέγχουμε αν υπάρχουν τα αρχεία
             checkFilePaths();
+
             // Διαβάζουμε τα πεδία από τα json
             readFields();
+
+            // Διαβάζουμε τα groups
+            readGroups();
+
             // Διαβάζουμε τα includes
             readIncludes();
+
             // Έναρξη Manager
             startManager();
         }
@@ -83,6 +89,7 @@ namespace DocumentGenerator
                 throw new Exception("Δεν βρέθηκε το αρχείο που περιέχει τα fields του (main) document");
             }
         }
+
         /// <summary>
         /// Έναρξη του manager που θα φτιάξει το αρχείο. 
         /// </summary>
@@ -93,7 +100,6 @@ namespace DocumentGenerator
             if (manager != null)
             {
                 manager.Save(savePath);
-
                 manager.Close();
                 manager.Dispose();
 
@@ -144,16 +150,13 @@ namespace DocumentGenerator
         {
             foreach (Comment comment in comments)
             {
-                //3.1.3.1 Καταγράφουμε τις παραμέτρους του comment
-                //string tableName = comment.Text.Replace("Table:", "").Replace("\r\n", "");
+                //3.1.3.1 Καταγράφουμε τις παραμέτρους του comment                
                 JObject tableName = ConvertCommentToJson(comment.Text);
 
                 //3.1.3.2 Βρίσκουμε τον πίνακα που έχει τα δεδομένα                    
                 if (tablesIndex.TryGetValue(tableName.GetValue("Table").ToString(), out BindingTable table))
                 {
-                    //3.1.3.3 Παράγουμε τον πίνακα
-                    var test = table;
-                    manager.PopulateGroupingTable(comment, table, bindingStack);
+                    manager.PopulateTable(comment, table, bindingStack);                    
                 }
                 else
                 {                    
@@ -167,7 +170,8 @@ namespace DocumentGenerator
             string json = "";
             string[] parts = text.Split(',');
             for (int i=0; i < parts.Length; i++){
-                string[] keyValue = parts[i].Split(':');
+                string part = parts[i].Trim();
+                string[] keyValue = part.Split(':');
                 json += keyValue[0] + ":\""+keyValue[1] + "\",";
             }
             json = "{" + json + "}";
@@ -289,23 +293,28 @@ namespace DocumentGenerator
             return path;
         }
 
+        #endregion
+
+        #region "   TABLES   "
+
         /// <summary>
         /// Reads all the files from the fields.txt
         /// </summary>
         protected void readFields()
         {
-
             // Check the fields files
             var jsonTables = checkFieldsFile();
 
             // For each table in the file
             foreach (JObject jsonTable in jsonTables)
             {
-                ParsejsonTables(jsonTable);
+                ParseJsonTables(jsonTable);
             }
+
+            dataSource.GetRelations(tablesIndex, fieldsIndex);
         }
 
-        private void ParsejsonTables(JObject jsonTable)
+        private void ParseJsonTables(JObject jsonTable)
         {
             string tableName = (string)jsonTable["table"];
 
@@ -315,13 +324,10 @@ namespace DocumentGenerator
             string tableAlias = (string)jsonTable["alias"];
 
             // DataTable             
-            BindingTable bindingTable = _createBindingTable(tableName, tableAlias);
+            BindingTable bindingTable = createBindingTable(tableName, tableAlias);
 
             // Fields
             ParseFields(jsonTable, tableName, bindingTable);
-
-
-            dataSource.GetRelations(tablesIndex, fieldsIndex);
         }
 
         private static void CheckTableName(string tableName)
@@ -368,11 +374,12 @@ namespace DocumentGenerator
                         {
                             Log.Error($"Το πεδίο '{bindingTable.Name}.{fieldName}' δεν βρέθηκε στους πίνακες της εφαρμογής");
                             //throw new Exception($"Το πεδίο '{bindingTable.Name}.{fieldName}' δεν βρέθηκε στους πίνακες της εφαρμογής");
-                        }                            
+                        }
                         else
                         {
                             fieldsIndex.Add(bindingField.Alias, bindingField);
-                            bindingTable.BindingFields.Add(bindingField);
+                            fieldsIndex.Add($"{bindingTable.Name}.{fieldName}", bindingField);
+                            bindingTable.Add(bindingField);
                         }
                     }
                     else
@@ -382,14 +389,14 @@ namespace DocumentGenerator
                     }
                 }
             }
-            else 
+            else
             {
                 Log.Error(String.Format("Initialize fields: Fields are missing from table {0}", tableName));
                 throw new Exception(String.Format("Initialize fields: Fields are missing from table {0}", tableName));
             }
         }
 
-        private BindingTable _createBindingTable(string tableName, string tableAlias)
+        private BindingTable createBindingTable(string tableName, string tableAlias)
         {
             BindingTable bindingTable = dataSource.GetTable(tableName, tableAlias);
             if (bindingTable == null)
@@ -438,6 +445,211 @@ namespace DocumentGenerator
 
             return jsonTables;
         }
+
+        #endregion
+
+        #region "   GROUPS   "
+
+        /// <summary>
+        /// Reads all the records from the groups.txt
+        /// </summary>
+        protected void readGroups()
+        {
+            // Check the fields files
+            var jsonGroups = checkGroupsFile();
+
+            // For each table in the file
+            foreach (JObject jsonGroup in jsonGroups)
+            {
+                ParseJsonGroups(jsonGroup);
+            }
+        }
+
+        protected JToken checkGroupsFile()
+        {
+            // Ανοίγουμε το αρχείο των groups και το διαβάζουμε
+            string content = openFile(groupsPath);
+
+            // Αν το περιεχόμενο δεν υπάρχει, αναφορά λάθους
+            if (content == null)
+            {
+                Log.Error("Initialize groups: File is missing", groupsPath);
+                throw new Exception("Initialize groups: File is missing");
+            }
+
+            // Παρσάρουμε το αρχείο ως json
+            JObject json = this.jsonParse(content);
+            if (json == null)
+            {
+                Log.Error("Initialize groups: content is missing");
+                throw new Exception("Initialize groups: content is missing");
+            }
+
+            // Διαβάζουμε τους πίνακες
+            var jsonGroups = json.GetValue("Groups");
+            if (jsonGroups == null)
+            {
+                Log.Error("Initialize groups: Groups list is missing", json);
+                throw new Exception("Initialize groups: 'Groups' list is missing");
+            }
+
+            return jsonGroups;
+        }
+
+        private void ParseJsonGroups(JObject jsonGroup)
+        {
+            string tableName = (string)jsonGroup["table"];
+
+            CheckTableName(tableName);
+
+            BindingTable table;
+            if (!tablesIndex.TryGetValue(tableName, out table))
+            {
+                Log.Error($"Initialize group fields: Table '{tableName}' was not found in tables index");
+                throw new Exception($"Initialize group fields: Table '{tableName}' was not found in tables index");
+            }
+
+            // Get the alias from the fields.txt file
+            string groupAlias = (string)jsonGroup["alias"];
+
+            // DataTable             
+            BindingTable bindingTable = createGroupTable(tableName, groupAlias);
+
+            // Fields
+            ParseGroupFields(jsonGroup, tableName, groupAlias, bindingTable, table);
+
+            // Create a new field and a relation in the source table
+            BindingField foreignKey = new BindingField(bindingTable, groupAlias + "Id", groupAlias + "Id", null, string.Empty, string.Empty);
+            table.Add(foreignKey);
+            table.BindingRelations.Add(new BindingRelation(bindingTable, foreignKey));
+
+            // Scan table rows for distinct group values
+            BindingTable.Enumerator enumerator = new BindingTable.Enumerator(table);
+            Dictionary<GroupValue, Guid> values = new Dictionary<GroupValue, Guid>(2 * table.Count);
+
+            // Get group field indexes
+            List<BindingField> indexes = new List<BindingField>();
+
+            for (int index = 1; index < bindingTable.BindingFields.Count; index++)
+            {
+                BindingField field = bindingTable.BindingFields[index];
+                for (int indexSrc = 0; indexSrc < table.BindingFields.Count; indexSrc++)
+                {
+                    BindingField fieldSrc = table.BindingFields[indexSrc];
+                    if (field.Name == fieldSrc.Name)
+                        indexes.Add(fieldSrc);
+                }
+            }
+
+            BindingTable.Row row;
+            enumerator.Start();
+            while ((row = enumerator.Next()) != null)
+            {
+                GroupValue groupValue = new GroupValue();
+
+                // Get group value
+                for (int index = 1; index < bindingTable.BindingFields.Count; index++)
+                {
+                    groupValue.Add(row.GetObject(indexes[index - 1]));
+                }
+
+                // Create a new row if necessary
+                Guid id;
+                BindingTable.Row bindingRow;
+                if (!values.TryGetValue(groupValue, out id))
+                {
+                    id = Guid.NewGuid();
+                    values.Add(groupValue, id);
+
+                    bindingRow = bindingTable.NewRow(id);
+                    bindingRow.Set(0, id);
+                    for (int indexField = 0; indexField < groupValue.Count; indexField++)
+                    {
+                        bindingRow.Set(indexField + 1, groupValue[indexField]);
+                    }
+                }
+
+                // Set foreign key in row
+                row.Set(foreignKey, id);
+            }
+        }
+
+        private void ParseGroupFields(JObject jsonGroup, string tableName, string groupAlias, BindingTable bindingTable, BindingTable sourceTable)
+        {
+            var jsonFields = jsonGroup["Fields"];
+
+            if (jsonFields != null && jsonFields.Count() > 0)
+            {
+                foreach (var jsonField in jsonFields)
+                {
+                    // Name
+                    string fieldName = jsonField["name"].Value<string>();
+
+                    if (fieldName == null || fieldName == string.Empty)
+                    {
+                        Log.Error("Initialize group fields: A field has no name or is empty");
+                        throw new Exception("Initialize group fields: A field has no name or is empty");
+                    }
+
+                    // Order 
+                    string fieldOrder = (string)jsonField["order"];
+
+                    BindingField sourceField;
+
+                    if (fieldsIndex.TryGetValue($"{tableName}.{fieldName}", out sourceField))
+                    {
+                        BindingField bindingField = new BindingField(bindingTable, fieldName, fieldName, null, string.Empty, string.Empty);
+                        bindingTable.Add(bindingField); // TODO: να μπει και order
+                        fieldsIndex.Add($"{bindingTable.Name}.{fieldName}", bindingField);
+
+                        BindingField field = sourceTable.BindingFields.Find((f) => f.Name == fieldName);
+                        if (field != null)
+                        {
+                            BindingRelation relation = sourceTable.GetRelation(bindingField);
+                            if (relation != null)
+                            {
+                                // Add a relation to bindingTable
+                                bindingTable.BindingRelations.Add(new BindingRelation(relation.Table, bindingField));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Log.Error($"Το πεδίο '{tableName}.{fieldName}' του group {groupAlias} δεν βρέθηκε σε κάποιον από τους υπάρχοντες πίνακες.");
+                        throw new Exception($"Το πεδίο '{tableName}.{fieldName}' του group {groupAlias} δεν βρέθηκε.");
+                    } 
+                }
+            }
+            else
+            {
+                Log.Error(String.Format("Initialize fields: Fields are missing from group {0}", groupAlias));
+                throw new Exception(String.Format("Initialize fields: Fields are missing from group {0}", groupAlias));
+            }
+        }
+
+        private BindingTable createGroupTable(string tableName, string groupAlias)
+        {
+            BindingTable groupTable = null;
+            BindingTable bindingTable = dataSource.GetTable(tableName, groupAlias);
+
+            if (bindingTable == null)
+            {
+                Log.Error($"Table '{tableName}' for group '{groupAlias}' doesn't exist");
+                throw new Exception($"Table '{tableName}' for group '{groupAlias}' doesn't exist");
+            }
+            else
+            {
+                groupTable = dataSource.GetGroup(bindingTable, groupAlias);
+                bindingTables.Add(groupTable);
+                tablesIndex.Add(groupAlias, groupTable);
+            }
+
+            return groupTable;
+        }
+
+        #endregion
+
+        #region "   INCLUDES   "
 
         protected void readIncludes()
         {
@@ -534,9 +746,12 @@ namespace DocumentGenerator
             return includeAlias;
         }
 
+        #endregion
+
+        #region "   MISCELLANEOUS   "
+
         protected string openFile(string path)
         {
-
             return File.ReadAllText(path);
         }
 
@@ -553,6 +768,15 @@ namespace DocumentGenerator
             }
         }
 
-
+        #endregion
     }
 }
+
+// (OK) 1. Διάβασμα των groups.txt
+// (OK) 2. Δημιουργία βοηθητικών πινάκων και Dictionary με τα διακριτά groups
+// (OK) 3. Δημιουργία επιπλέον σχέσεων
+// (OK) 4. Προσθήκη επιπλέον πεδίων στους κανονικούς πίνακες (ίσως μέσω βοηθητικών δομών και όχι πάνω στους κανονικούς πίνακες)
+// (OK) 5. Σκανάρισμα
+// (OK) 6. Φιλτράρισμα των πινάκων με βάση τα groups
+// 7. Events
+// 8. Order By

@@ -19,10 +19,6 @@
 			"alias": "rptAnnex4",
 			"table": "Annex4Group",
 		},
-		{
-			"file":	"rptAnnex4Group.docx",
-			"alias": "rptAnnex4Group",
-			"table": "PageBLevelFaces",
-		}
+		
 	]
 }

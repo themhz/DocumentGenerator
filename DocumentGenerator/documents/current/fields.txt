@@ -1,0 +1,157 @@
+﻿{
+	"Tables":
+	[
+		{
+			"table":"PageA",
+			"alias": "PageA",
+			"Fields":[
+				{"name":"Name", "alias":"aName", "format":""},
+				{"name":"RecNumber","alias":"RecNumber", "format":"{0:0.00}"},
+				{"name":"Image", "alias":"aImage"},
+				{"name":"Ri", "alias":"aRi", "format":"{0:0.00}"},
+				{"name":"R", "alias":"aR", "format":"{0:0.00}"},
+				{"name":"Ra", "alias":"aRa", "format":"{0:0.00}"},
+				{"name":"Rall", "alias":"aRall", "format":"{0:0.00}"},
+				{"name":"Thickness", "alias":"aThickness", "format":"{0:0.00}"}				
+			]
+		},
+		{
+			"table":"PageADetails",
+			"alias": "PageADetails",
+			"Fields":[
+				{"name":"ID", "alias":"paID"},
+				{"name":"Name", "alias":"paName"},
+				{"name":"Density", "alias":"aDensity", "format":"{0:0.00}"},
+				{"name":"d", "alias":"ad", "format":"{0:0.00}"},
+				{"name":"λ", "alias":"aλ", "format":"{0:0.00}"},
+				{"name":"dλ", "alias":"adλ", "format":"{0:0.00}"},				
+			]
+		},
+		{
+			"table":"Projects",
+			"alias": "Projects",
+			"Fields":[
+				{"name":"ID", "alias":"aProjectID"},
+				{"name":"ProjectName", "alias":"aProjectName"},
+				{"name":"Address1", "alias":"aAddress1"},
+				{"name":"SolutionEngineersSynopsis", "alias":"aSolutionEngineersSynopsis"},
+				{"name":"SolutionPrintedYear", "alias":"aSolutionPrintedYear"},
+				{"name":"TEECurrentVersion", "alias":"aTEECurrentVersion"},
+				{"name":"TEESN", "alias":"aTEESN"},
+				{"name":"SoftwareName", "alias":"aSoftwareName"},
+				{"name":"EnergyBuildingRegistrationNumber", "alias":"aEnergyBuildingRegistrationNumber"},
+				{"name":"EnergyBuildingVersion", "alias":"aEnergyBuildingVersion"},
+				{"name":"EnergyBuildingSN", "alias":"aEnergyBuildingSN"},			
+			]
+
+		},
+		{
+			"table":"BuildingsGeneral",
+			"alias": "BuildingsGeneral",
+			"Fields":[
+				{"name":"ID", "alias":"bgID"},
+				{"name":"CityID", "alias":"bgCityID"},
+				{"name":"Elevation", "alias":"bgElevation"},
+				{"name":"ClimaticZoneName", "alias":"bgClimaticZoneName"},
+				{"name":"RecNumber", "alias":"bgRecNumber"},
+				{"name":"Name", "alias":"bgaName"},
+
+			]
+		},
+		{
+			"table":"SpecialAttributes",
+			"alias": "SpecialAttributes",
+			"Fields":[
+				{"name":"ID", "alias":"spaID"},
+				{"name":"FT", "alias":"spaFT"},
+				{"name":"FW", "alias":"spaFW"},
+				{"name":"FR", "alias":"spaFR"},
+				{"name":"FFB", "alias":"spaFFB"},
+				{"name":"FFU", "alias":"spaFFU"},
+				{"name":"FFA", "alias":"spaFFA"},
+				{"name":"FTU", "alias":"spaFTU"},
+				{"name":"FTB", "alias":"spaFTB"},
+				{"name":"FGF", "alias":"spaFGF"},
+				{"name":"F", "alias":"spaF"},
+				{"name":"BuildingVolume", "alias":"spaBuildingVolume"},
+				{"name":"FV", "alias":"spaFV"},
+				{"name":"Umax", "alias":"spaUmax"},
+			]
+
+		},
+		{
+			"table":"Slabs",
+			"alias": "Slabs",
+			"Fields":[
+				{"name":"ID", "alias":"staID"},
+				{"name":"Name", "alias":"staName"},
+				{"name":"HeatInsulationRecNumber", "alias":"slaHeatInsulationRecNumber", "format":"{0:0.00}"},
+				{"name":"K", "alias":"staK", "slaformat":"{0:0.00}"},
+				{"name":"Area", "alias":"slaArea", "format":"{0:0.00}"},
+				{"name":"P", "alias":"slaP", "format":"{0:0.00}"},				
+				{"name":"B", "alias":"slaB", "format":"{0:0.00}"},
+				{"name":"GroundDeep", "alias":"slaGroundDeep", "format":"{0:0.00}"},				
+				{"name":"K2", "alias":"slaK2", "format":"{0:0.00}"},
+			]
+		},
+		{
+			"table":"PageBLevels",
+			"alias": "PageBLevels",
+			"Fields":[
+				{"name":"ID", "alias":"pblID"},
+				{"name":"Name", "alias":"pblName"},
+			]
+		},
+		{
+			"table":"PageBLevelFaces",
+			"alias": "PageBLevelFaces",
+			"Fields":[
+				{"name":"ID", "alias":"pdfID"},
+				{"name":"Name", "alias":"pbfName"},
+				{"name":"ΣUxAAnnex4HeatedAndAdjusted", "alias":"pbfΣUxAAnnex4HeatedAndAdjusted"},
+				{"name":"Image", "alias":"pbfImage"},				
+			]
+		},
+		{
+			"table":"Annex4VerticalOpaqueElements",
+			"alias": "Annex4VerticalOpaqueElements",
+			"Fields":[
+				{"name":"ID", "alias":"a4voID"},
+				{"name":"ElementGroupCaption", "alias":"a4voElementGroupCaption"},
+				{"name":"PagesSynopsis", "alias":"a4voPagesSynopsis"},				
+				{"name":"U", "alias":"a4voU"},
+				{"name":"Name", "alias":"a4voName"},
+				{"name":"Width", "alias":"a4voWidth"},
+				{"name":"Height", "alias":"a4voHeight"},
+				{"name":"Area", "alias":"a4voArea"},				
+				{"name":"PageBLevelFaceID", "alias":"a4voPageBLevelFaceID"},
+				{"name":"GroupIndex", "alias":"a4voGroupIndex"},				
+			]
+		},
+		{
+			"table":"OpaqueVerticalElementTotals",
+			"alias": "OpaqueVerticalElementTotals",
+			"Fields":[
+				{"name":"ID", "alias":"ovetID"},
+				{"name":"FaceName", "alias":"ovetFaceName"},
+				{"name":"ElementKind", "alias":"ovetElementKind"},
+				{"name":"U", "alias":"ovetU"},
+				{"name":"Area", "alias":"ovetArea"},
+				{"name":"UxA", "alias":"ovetUxA"},
+				{"name":"ΣΣA", "alias":"ovetΣΣA"},
+				{"name":"AreaWithoutAdjacentBuilding", "alias":"ovetAreaWithoutAdjacentBuilding"},				
+				{"name":"LevelName", "alias":"ovetLevelName"},
+				{"name":"ΣΣUxA", "alias":"ovetΣΣUxA"},
+				{"name":"n", "alias":"ovetn"},
+				{"name":"b", "alias":"ovetb"},
+				{"name":"nxΣΣA", "alias":"ovetnxΣΣA"},
+				{"name":"bxnxΣΣUxA", "alias":"ovetbxnxΣΣUxA"},
+				{"name":"LevelΣA", "alias":"ovetLevelΣA"},				
+				{"name":"LevelΣUxA", "alias":"ovetLevelΣUxA"},
+				{"name":"UxAWithoutAdjacentBuilding", "alias":"ovetUxAWithoutAdjacentBuilding"},
+				{"name":"LevelΣAWithoutAdjacentBuilding", "alias":"ovetLevelΣAWithoutAdjacentBuilding"},
+				{"name":"LevelΣUxAWithoutAdjacentBuilding", "alias":"ovetLevelΣUxAWithoutAdjacentBuilding"},												
+			]
+		},
+	]
+}

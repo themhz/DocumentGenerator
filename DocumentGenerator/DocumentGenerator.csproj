@@ -72,6 +72,7 @@
       <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
     </Compile>
     <Compile Include="src\AppEngine.cs" />
+    <Compile Include="src\bindings\GroupValue.cs" />
     <Compile Include="src\bindings\BindingRelation.cs" />
     <Compile Include="src\bindings\BindingField.cs" />
     <Compile Include="src\bindings\BindingInclude.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="src\generics\Comment.cs" />
     <Compile Include="src\generics\Token.cs" />
     <Compile Include="src\helpers\ImageResizer.cs" />
+    <Compile Include="src\helpers\ObjectExtensions.cs" />
     <Compile Include="src\Processor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,6 +105,7 @@
       <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
     </None>
     <None Include="documents\Chap3.docx" />
+    <None Include="documents\main_document_generated.docx" />
     <None Include="documents\rptAnnex4A.docx" />
     <None Include="documents\rptAnnex4.docx" />
     <None Include="documents\Slabs.docx" />
@@ -117,17 +120,18 @@
   <ItemGroup>
     <Content Include="documents\fields.txt" />
     <Content Include="documents\FieldTranslatorDocumentGenerator.txt" />
+    <Content Include="documents\groups.txt" />
     <Content Include="documents\includes.txt" />
     <Content Include="documents\datasets\dataEnergyBuilding.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Log\Loger.csproj">
       <Project>{2b08e942-0d6d-451b-937c-451f0b76c353}</Project>
       <Name>Loger</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\bindings\dataset\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

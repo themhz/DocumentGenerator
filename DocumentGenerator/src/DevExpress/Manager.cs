@@ -264,22 +264,27 @@ namespace DocumentGenerator.DXDocuments
             dxRange lastRange = newTableRange;
 
             enumerator.Start();
-            while ((row = enumerator.Next()) != null) { // TODO: use index for performance
-                if (row.InContext(contextStack)) {
+            while ((row = enumerator.Next()) != null)  // TODO: use index for performance
+            {
+                if (row.InContext(contextStack)) 
+                {
                     lastRange = _wordProcessor.Document.InsertDocumentContent(lastRange.End, bodyRange, DevExpress.XtraRichEdit.API.Native.InsertOptions.KeepSourceFormatting);
 
-                    foreach (Token token in table.Tokens) {
+                    foreach (Token token in table.Tokens) 
+                    {
                         //3.1.1 Αν είναι field:
                         BindingField field = bindingTable.BindingFields.Find((BindingField f) => token.Alias == f.Alias || token.Alias == f.FullName);
 
                         //3.1.1.1 Ελέγχουμε αν το alias είναι έγκυρο
                         if (field != null) {
                             //3.1.1.2 Βρίσκουμε την τιμή του field
-                            string text = row.GetValue(field, contextStack);
+                            string text = row.GetValueAsString(field, contextStack);
 
                             //3.1.1.3 Αντικαθιστούμε το alias με το κείμενο
                             replaceTextInRange($"{{{token.Original}}}", text, lastRange);
-                        } else {
+                        } 
+                        else 
+                        {
                             // TODO: Log
                         }
                     }
@@ -295,9 +300,8 @@ namespace DocumentGenerator.DXDocuments
         }
 
         public void PopulateGroupingTable(Comment comment, BindingTable bindingTable, List<BindingTable.Row> contextStack)
-        { 
-            Table table = comment.Table;
-            DataTable dataTable = bindingTable.DataTable;
+        {            
+            Table table = comment.Table;            
 
             // Delete comment
             _wordProcessor.Document.Delete(comment.Range.Value);
@@ -314,12 +318,13 @@ namespace DocumentGenerator.DXDocuments
             var bodyRange = getRowsRange(table.Element, table.HeaderCount, table.BodyCount);
 
             BindingTable.Row row;
+            
             BindingTable.Enumerator enumerator = new BindingTable.Enumerator(bindingTable);
             dxRange lastRange = newTableRange;
 
             enumerator.Start();
-            while ((row = enumerator.Next()) != null)
-            { // TODO: use index for performance
+            while ((row = enumerator.Next()) != null) // TODO: use index for performance
+            {
                 if (row.InContext(contextStack))
                 {
                     lastRange = _wordProcessor.Document.InsertDocumentContent(lastRange.End, bodyRange, DevExpress.XtraRichEdit.API.Native.InsertOptions.KeepSourceFormatting);
@@ -333,7 +338,7 @@ namespace DocumentGenerator.DXDocuments
                         if (field != null)
                         {
                             //3.1.1.2 Βρίσκουμε την τιμή του field
-                            string text = row.GetValue(field, contextStack);
+                            string text = row.GetValueAsString(field, contextStack);
 
                             //3.1.1.3 Αντικαθιστούμε το alias με το κείμενο
                             replaceTextInRange($"{{{token.Original}}}", text, lastRange);

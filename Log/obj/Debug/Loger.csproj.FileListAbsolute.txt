@@ -40,7 +40,6 @@ C:\Users\themis\source\repos\DocumentGenerator\Log\bin\Debug\de\DevExpress.Pdf.v
 C:\Users\themis\source\repos\DocumentGenerator\Log\bin\Debug\es\DevExpress.Pdf.v21.2.Core.resources.dll
 C:\Users\themis\source\repos\DocumentGenerator\Log\bin\Debug\ja\DevExpress.Pdf.v21.2.Core.resources.dll
 C:\Users\themis\source\repos\DocumentGenerator\Log\bin\Debug\ru\DevExpress.Pdf.v21.2.Core.resources.dll
-C:\Users\themis\source\repos\DocumentGenerator\Log\obj\Debug\Loger.csproj.AssemblyReference.cache
 C:\Users\themis\source\repos\DocumentGenerator\Log\obj\Debug\Loger.csproj.CoreCompileInputs.cache
 C:\Users\themis\source\repos\DocumentGenerator\Log\obj\Debug\Loger.csproj.CopyComplete
 C:\Users\themis\source\repos\DocumentGenerator\Log\obj\Debug\Loger.dll

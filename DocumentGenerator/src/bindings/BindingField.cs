@@ -18,7 +18,7 @@ namespace DocumentGenerator
         {
             Table = table;
             Name = name;
-            _fullName = string.Format("{0}.{1}", name, table.Name);
+            _fullName = string.Format("{0}.{1}", table.Name, name);
             Alias = alias;
             Column = column;
             Type = column == null ? typeof(Object) : column.DataType;

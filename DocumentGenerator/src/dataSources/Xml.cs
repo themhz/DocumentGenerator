@@ -12,6 +12,7 @@ namespace DocumentGenerator {
         //private DataSet _dataSet;
         private Dictionary<string, DataColumn> columnsIndex;
         private Dictionary<string, DataTable> tablesIndex;
+        private DataSet dsGroups = new DataSet();
        
         public Xml(List<DataSet> dataSets) {
             createIndexes(dataSets);
@@ -91,6 +92,24 @@ namespace DocumentGenerator {
             }
 
             return null;
+        }
+
+        public BindingTable GetGroup(BindingTable table, string groupName)
+        {
+            // Create Table
+            DataTable dataTable = new DataTable(groupName);
+            DataColumn columnId = new DataColumn("ID", typeof(Guid));
+            dataTable.Columns.Add(columnId);
+            dataTable.PrimaryKey = new DataColumn[] { columnId };
+
+            // Add Table to DataSet
+            dsGroups.Tables.Add(dataTable);
+
+            // Create Binding Table
+            BindingTable bindingGroup = new BindingTable(groupName, groupName, dataTable, dataTable.Columns[0], new List<BindingField>(), new List<BindingRelation>(), this);
+            bindingGroup.BindingFields.Add(new BindingField(bindingGroup, columnId.ColumnName, columnId.ColumnName, columnId, "", ""));
+
+            return bindingGroup;
         }
 
         public void GetRelations(Dictionary<string, BindingTable> tables, Dictionary<string, BindingField> fields) {

@@ -1,0 +1,13 @@
+﻿{
+	"Groups":
+	[
+		{
+			"table": "Annex4VerticalOpaqueElements",
+			"alias": "Annex4Group",
+			"Fields":[
+				{"name":"PageBLevelFaceID"},
+				{"name":"GroupIndex", "order":"ASC"},
+			]
+		}
+	]
+}

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace DocumentGenerator {
     public interface IDataSource {
         BindingTable GetTable(string tableName, string alias);
+        BindingTable GetGroup(BindingTable table, string groupName);
         BindingField GetField(BindingTable table, string fieldName, string alias, string formatString, string formatNull);
         string GetValue(BindingField field, List<BindingTable.Row> contextRows, BindingTable.Row currentRow);
         string GetValue(BindingField field, int index = 0);
