@@ -15,6 +15,10 @@
 			"alias": "Slabs",
 		},
 		{
+			"file":	"Annex4.docx",
+			"alias": "Annex4",			
+		},
+		{
 			"file":	"rptAnnex4.docx",
 			"alias": "rptAnnex4",
 			"table": "Annex4Group",
@@ -23,6 +27,11 @@
 			"file":	"rptAnnex4Group.docx",
 			"alias": "rptAnnex4Group",
 			"table": "PageBLevelFaces",
+		},
+		{
+			"file":	"rptAnnex4Sygedrotika.docx",
+			"alias": "rptAnnex4Sygedrotika",
+			"table": "OpaqueVerticalElementTotals",		
 		}
 	]
 }

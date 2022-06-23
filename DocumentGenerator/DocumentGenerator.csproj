@@ -106,12 +106,12 @@
     </None>
     <None Include="documents\Chap3.docx" />
     <None Include="documents\main_document_generated.docx" />
-    <None Include="documents\rptAnnex4A.docx" />
+    <None Include="documents\rptAnnex4Sygedrotika.docx" />
     <None Include="documents\rptAnnex4.docx" />
     <None Include="documents\rptAnnex4Group.docx" />
+    <None Include="documents\Annex4.docx" />
     <None Include="documents\Slabs.docx" />
     <None Include="documents\PageA.docx" />
-    <None Include="documents\PageA_old.docx" />
     <None Include="documents\Main.docx" />
     <None Include="documents\energyBuilding\Main.docx" />
     <None Include="documents\energyBuilding\PageADetails.docx" />
@@ -119,6 +119,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="documents\todo.txt" />
     <Content Include="documents\fields.txt" />
     <Content Include="documents\FieldTranslatorDocumentGenerator.txt" />
     <Content Include="documents\groups.txt" />

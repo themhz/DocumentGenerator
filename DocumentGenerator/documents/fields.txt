@@ -1,6 +1,26 @@
 ﻿{
 	"Tables":
-	[		
+	[
+		{
+			"table":"Projects",
+			"alias":"Projects",
+			"Fields":[
+				{"name":"ID", "alias":"aID", "format":"", "formatNull":""},
+				{"name":"ProjectName", "alias":"aProjectName", "format":"", "formatNull":""},
+				{"name":"Address1", "alias":"aAddress1", "format":"", "formatNull":""},
+				{"name":"OwnersSynopsis", "alias":"aOwnersSynopsis", "format":"", "formatNull":""},
+				{"name":"SolutionEngineersSynopsis", "alias":"aSolutionEngineersSynopsis", "format":"", "formatNull":""},
+				{"name":"SolutionPrintedYear", "alias":"aSolutionPrintedYear", "format":"", "formatNull":""},
+				{"name":"TEECurrentVersion", "alias":"aTEECurrentVersion", "format":"", "formatNull":""},
+				{"name":"TEESN", "alias":"aTEESN", "format":"", "formatNull":""},
+				{"name":"SoftwareName", "alias":"aSoftwareName", "format":"", "formatNull":""},
+				{"name":"EnergyBuildingRegistrationNumber", "alias":"aEnergyBuildingRegistrationNumber", "format":"", "formatNull":""},
+				{"name":"EnergyBuildingVersion", "alias":"aEnergyBuildingVersion", "format":"", "formatNull":""},
+				{"name":"EnergyBuildingSN", "alias":"aEnergyBuildingSN", "format":"", "formatNull":""},
+				{"name":"FolderDisplayName", "alias":"aFolderDisplayName", "format":"", "formatNull":""},
+				{"name":"SolutionName", "alias":"aSolutionName", "format":"", "formatNull":""}
+			]
+		},
 		{
 			"table":"PageBLevels",
 			"alias": "PageBLevels",
@@ -16,7 +36,7 @@
 				{"name":"ID", "alias":"pdfID"},
 				{"name":"Name", "alias":"pbfName"},
 				{"name":"ΣUxAAnnex4HeatedAndAdjusted", "alias":"pbfΣUxAAnnex4HeatedAndAdjusted"},
-				{"name":"Image", "alias":"pbfImage"},				
+				{"name":"Image", "alias":"pbfImage"},
 			]
 		},
 		{
@@ -58,6 +78,141 @@
 				{"name":"UxAWithoutAdjacentBuilding", "alias":"ovetUxAWithoutAdjacentBuilding"},
 				{"name":"LevelΣAWithoutAdjacentBuilding", "alias":"ovetLevelΣAWithoutAdjacentBuilding"},
 				{"name":"LevelΣUxAWithoutAdjacentBuilding", "alias":"ovetLevelΣUxAWithoutAdjacentBuilding"},												
+			]
+		},{
+			"table":"PageCBuildings",
+			"alias": "PageCBuildings",
+			"Fields":[
+				{"name":"ID", "alias":"PCID"},
+				{"name":"EBuildingID", "alias":"PCEBuildingID"},
+				{"name":"ProjectID", "alias":"PCProjectID"},
+				{"name":"RecNumber", "alias":"PCRecNumber"},
+				{"name":"Name", "alias":"PCName"},
+				{"name":"Kmax", "alias":"PCKmax"},
+				{"name":"F", "alias":"PCF"},
+				{"name":"K", "alias":"PCK"},
+				{"name":"KF", "alias":"PCKF"},
+				{"name":"ΣLxΨxb", "alias":"PCΣLxΨxb"},
+				{"name":"bxΣAxU", "alias":"PCbxΣAxU"},
+				{"name":"Total_bxΣAxU_ΣLxΨxb", "alias":"Total_bxΣAxU_ΣLxΨxb"},
+				{"name":"ΣF", "alias":"PCΣF"},
+				{"name":"EBuildingSlabTypeID", "alias":"PCEBuildingSlabTypeID"},
+				{"name":"EBuildingSlabTypeUTA", "alias":"PCEBuildingSlabTypeUTA"},
+				{"name":"EBuildingSlabTypeUTU", "alias":"PCEBuildingSlabTypeUTU"},
+				{"name":"EBuildingSlabTypeUTB", "alias":"PCEBuildingSlabTypeUTB"},
+				{"name":"EBuildingRoofTypeID", "alias":"PCEBuildingRoofTypeID"},
+				{"name":"EBuildingRoofTypeUTA", "alias":"PCEBuildingRoofTypeUTA"},
+				{"name":"EBuildingRoofTypeUTU", "alias":"PCEBuildingRoofTypeUTU"},
+				{"name":"EBuildingRoofTypeUTB", "alias":"PCEBuildingRoofTypeUTB"},
+				{"name":"VerticalBuildingArea", "alias":"PCVerticalBuildingArea"},
+				{"name":"VerticalbxΣAxU", "alias":"PCVerticalbxΣAxU"},
+				{"name":"HorizontalBuildingArea", "alias":"PCHorizontalBuildingArea"},
+				{"name":"HorizontalbxΣAxU", "alias":"PCHorizontalbxΣAxU"},
+				{"name":"OpeningsArea", "alias":"PCOpeningsArea"},
+				{"name":"OpeningsbxΣAxU", "alias":"PCOpeningsbxΣAxU"},
+				{"name":"TotalBuildingArea", "alias":"PCTotalBuildingArea"},
+				{"name":"TotalBuildingxΣAxU", "alias":"PCTotalBuildingxΣAxU"},
+				{"name":"TotalBuildingVolume", "alias":"PCTotalBuildingVolume"},
+				{"name":"BuildingVolumeCustom", "alias":"PCBuildingVolumeCustom"},
+				{"name":"RatioAreaToVolume", "alias":"PCRatioAreaToVolume"},
+				{"name":"BuildingFaceImage", "alias":"PCBuildingFaceImage"},
+				{"name":"HasClosedRoofs", "alias":"PCHasClosedRoofs"},
+				{"name":"HasHorizontalElements", "alias":"PCHasHorizontalElements"},
+				{"name":"TotalVerticalUnheatedWidth", "alias":"PCTotalVerticalUnheatedWidth"},
+				{"name":"TotalVerticalUnheatedArea", "alias":"PCTotalVerticalUnheatedArea"},
+				{"name":"SlabMiddleDeepth", "alias":"PCSlabMiddleDeepth"},				
+			]
+		},{
+			"table":"BuildingsGeneral",
+			"alias":"BuildingsGeneral",
+			"Fields":[
+				{"name":"ID", "alias":"BGID", "format":"", "formatNull":""},
+				{"name":"RecNumber", "alias":"BGRecNumber", "format":"", "formatNull":""},
+				{"name":"Name", "alias":"BGName", "format":"", "formatNull":""},
+				{"name":"CityID", "alias":"BGCityID", "format":"", "formatNull":""},
+				{"name":"CityRecNumber", "alias":"BGCityRecNumber", "format":"", "formatNull":""},
+				{"name":"CityName", "alias":"BGCityName", "format":"", "formatNull":""},
+				{"name":"Elevation", "alias":"BGElevation", "format":"", "formatNull":""},
+				{"name":"ClimaticZoneID", "alias":"BGClimaticZoneID", "format":"", "formatNull":""},
+				{"name":"ClimaticZoneRecNumber", "alias":"BGClimaticZoneRecNumber", "format":"", "formatNull":""},
+				{"name":"ClimaticZoneName", "alias":"BGClimaticZoneName", "format":"", "formatNull":""},
+				{"name":"RefID1", "alias":"BGRefID1", "format":"", "formatNull":""},
+				{"name":"RefID2", "alias":"BGRefID2", "format":"", "formatNull":""}
+			]
+		},{
+			"table":"SpecialAttributes",
+			"alias":"SpecialAttributes",
+			"Fields":[
+				{"name":"ID", "alias":"SAID", "format":"", "formatNull":""},
+				{"name":"PageCBuildings", "alias":"SAPageCBuildings", "format":"", "formatNull":""},
+				{"name":"FT", "alias":"SAFT", "format":"", "formatNull":""},
+				{"name":"FDA", "alias":"SAFDA", "format":"", "formatNull":""},
+				{"name":"FW", "alias":"SAFW", "format":"", "formatNull":""},
+				{"name":"FWU", "alias":"SAFWU", "format":"", "formatNull":""},
+				{"name":"FR", "alias":"SAFR", "format":"", "formatNull":""},
+				{"name":"FRU", "alias":"SAFRU", "format":"", "formatNull":""},
+				{"name":"FRB", "alias":"SAFRB", "format":"", "formatNull":""},
+				{"name":"FFB", "alias":"SAFFB", "format":"", "formatNull":""},
+				{"name":"FFU", "alias":"SAFFU", "format":"", "formatNull":""},
+				{"name":"FFA", "alias":"SAFFA", "format":"", "formatNull":""},
+				{"name":"FTU", "alias":"SAFTU", "format":"", "formatNull":""},
+				{"name":"FDU", "alias":"SAFDU", "format":"", "formatNull":""},
+				{"name":"FTB", "alias":"SAFTB", "format":"", "formatNull":""},
+				{"name":"FGF", "alias":"SAFGF", "format":"", "formatNull":""},
+				{"name":"BuildingVolume", "alias":"SABuildingVolume", "format":"", "formatNull":""},
+				{"name":"Umax", "alias":"SAUmax", "format":"", "formatNull":""},
+				{"name":"F", "alias":"SAF", "format":"", "formatNull":""},
+				{"name":"FV", "alias":"SAFV", "format":"", "formatNull":""},
+				{"name":"Image", "alias":"SAImage", "format":"", "formatNull":""}
+			]
+		},
+		{
+			"table":"PageA",
+			"alias":"PageA",
+			"Fields":[
+				{"name":"ID", "alias":"PAid", "format":"{0}=1234", "formatNull":"is null"},
+				{"name":"BuildingID", "alias":"PABuildingID", "format":"", "formatNull":""},
+				{"name":"TypeID", "alias":"PATypeID", "format":"", "formatNull":""},
+				{"name":"RecNumber", "alias":"PARecNumber", "format":"", "formatNull":""},
+				{"name":"Name", "alias":"PAName", "format":"", "formatNull":""},
+				{"name":"HeatInsulationRecNumber", "alias":"PAHeatInsulationRecNumber", "format":"", "formatNull":""},
+				{"name":"FullHeatInsulationRecNumber", "alias":"PAFullHeatInsulationRecNumber", "format":"", "formatNull":""},
+				{"name":"ClimaticZoneName", "alias":"PAClimaticZoneName", "format":"", "formatNull":""},
+				{"name":"TypeName", "alias":"PATypeName", "format":"", "formatNull":""},
+				{"name":"ElementTypePhoto", "alias":"PAElementTypePhoto", "format":"", "formatNull":""},
+				{"name":"ElementTypeCase", "alias":"PAElementTypeCase", "format":"", "formatNull":""},
+				{"name":"ElementTypeCaseShort", "alias":"PAElementTypeCaseShort", "format":"", "formatNull":""},
+				{"name":"Thickness", "alias":"PAThickness", "format":"", "formatNull":""},
+				{"name":"Ri", "alias":"PARi", "format":"", "formatNull":""},
+				{"name":"R", "alias":"PAR", "format":"", "formatNull":""},
+				{"name":"Ra", "alias":"PARa", "format":"", "formatNull":""},
+				{"name":"Rall", "alias":"PARall", "format":"", "formatNull":""},
+				{"name":"U", "alias":"PAU", "format":"", "formatNull":""},
+				{"name":"Umax", "alias":"PAUmax", "format":"", "formatNull":""},
+				{"name":"cellLeftText", "alias":"PAcellLeftText", "format":"", "formatNull":""},
+				{"name":"cellRightDownText", "alias":"PAcellRightDownText", "format":"", "formatNull":""},
+				{"name":"cellRightUpText", "alias":"PAcellRightUpText", "format":"", "formatNull":""},
+				{"name":"IsPrintable", "alias":"PAIsPrintable", "format":"", "formatNull":""},
+				{"name":"Image", "alias":"PAImage", "format":"", "formatNull":""},
+				{"name":"HasMaterialWithPercentage", "alias":"PAHasMaterialWithPercentage", "format":"", "formatNull":""},
+				{"name":"RefID1", "alias":"PARefID1", "format":"", "formatNull":""}
+			]
+		},
+		{
+			"table":"PageADetails",
+			"alias":"PageADetails",
+			"Fields":[
+				{"name":"ID", "alias":"PADID", "format":"", "formatNull":""},
+				{"name":"PageADetailID", "alias":"PADPageADetailID", "format":"", "formatNull":""},
+				{"name":"MaterialID", "alias":"PADMaterialID", "format":"", "formatNull":""},
+				{"name":"Name", "alias":"PADName", "format":"", "formatNull":""},
+				{"name":"Density", "alias":"PADDensity", "format":"", "formatNull":""},
+				{"name":"d", "alias":"PADd", "format":"", "formatNull":""},
+				{"name":"λ", "alias":"PADλ", "format":"", "formatNull":""},
+				{"name":"dλ", "alias":"PADdλ", "format":"", "formatNull":""},
+				{"name":"Percentage", "alias":"PADPercentage", "format":"", "formatNull":""},
+				{"name":"PrintPercentageColumn", "alias":"PADPrintPercentageColumn", "format":"", "formatNull":""},
+				{"name":"Index", "alias":"PADIndex", "format":"", "formatNull":""}
 			]
 		},
 	]

@@ -418,10 +418,12 @@ namespace DocumentGenerator.DXDocuments
 
                 byte[] bytes = Convert.FromBase64String(byteCode);
                 bytes = ImageResizer.resize(bytes, 700, 700);
-                using (MemoryStream ms = new MemoryStream(bytes)) {
-                    dxImageSource image = dxImageSource.FromStream(ms);
-                    _wordProcessor.Document.Images.Insert(sourceRange.Start, image);
-                }                
+                if (bytes.Length > 0) {
+                    using (MemoryStream ms = new MemoryStream(bytes)) {
+                        dxImageSource image = dxImageSource.FromStream(ms);
+                        _wordProcessor.Document.Images.Insert(sourceRange.Start, image);
+                    }
+                }
             }
             _wordProcessor.Document.Delete(sourceRange);
             //this.wordProcessor.Document.Replace(targetRange, targetText);
