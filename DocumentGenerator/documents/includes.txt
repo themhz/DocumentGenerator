@@ -16,8 +16,8 @@
 		},
 		{
 			"file":	"Annex4.docx",
-			"alias": "Annex4",			
-		},
+			"alias": "Annex4",
+		},		
 		{
 			"file":	"rptAnnex4.docx",
 			"alias": "rptAnnex4",
@@ -30,8 +30,16 @@
 		},
 		{
 			"file":	"rptAnnex4Sygedrotika.docx",
-			"alias": "rptAnnex4Sygedrotika",
-			"table": "OpaqueVerticalElementTotals",		
-		}
+			"alias": "rptAnnex4Sygedrotika",						
+		},
+		{
+			"file":	"Annex5.docx",
+			"alias": "Annex5",			
+		},
+		{
+			"file":	"Annex51.docx",
+			"alias": "Annex51",
+			"table": "HorizontalElementsGroup",
+		},
 	]
 }

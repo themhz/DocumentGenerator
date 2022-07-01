@@ -8,6 +8,14 @@
 				{"name":"PageBLevelFaceID"},
 				{"name":"GroupIndex", "order":"ASC"},
 			]
+		},
+		{
+			"table": "HorizontalElements",
+			"alias": "HorizontalElementsGroup",
+			"Fields":[
+				{"name":"ElementTypeU"},				
+				{"name":"ElementGroupCaption"},				
+			]
 		}
 	]
 }

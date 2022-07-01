@@ -93,6 +93,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="documents\Annex51.docx" />
+    <None Include="documents\Annex5.docx" />
     <None Include="documents\datasets\dsBuildingHeatInsulation.xsc">
       <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
     </None>
@@ -119,6 +121,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="documents\datasets\dataHeatInsulation.xml" />
     <Content Include="documents\todo.txt" />
     <Content Include="documents\fields.txt" />
     <Content Include="documents\FieldTranslatorDocumentGenerator.txt" />

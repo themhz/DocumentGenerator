@@ -77,7 +77,7 @@
 				{"name":"LevelΣUxA", "alias":"ovetLevelΣUxA"},
 				{"name":"UxAWithoutAdjacentBuilding", "alias":"ovetUxAWithoutAdjacentBuilding"},
 				{"name":"LevelΣAWithoutAdjacentBuilding", "alias":"ovetLevelΣAWithoutAdjacentBuilding"},
-				{"name":"LevelΣUxAWithoutAdjacentBuilding", "alias":"ovetLevelΣUxAWithoutAdjacentBuilding"},												
+				{"name":"LevelΣUxAWithoutAdjacentBuilding", "alias":"ovetLevelΣUxAWithoutAdjacentBuilding"},	
 			]
 		},{
 			"table":"PageCBuildings",
@@ -213,6 +213,67 @@
 				{"name":"Percentage", "alias":"PADPercentage", "format":"", "formatNull":""},
 				{"name":"PrintPercentageColumn", "alias":"PADPrintPercentageColumn", "format":"", "formatNull":""},
 				{"name":"Index", "alias":"PADIndex", "format":"", "formatNull":""}
+			]
+		},{
+			"table":"OpaqueVerticalElementLevelTotals",
+			"alias":"OpaqueVerticalElementLevelTotals",
+			"Fields":[
+				{"name":"ID", "alias":"OVELTID", "format":"", "formatNull":""},
+				{"name":"PageBLevelID", "alias":"OVELTPageBLevelID", "format":"", "formatNull":""},
+				{"name":"LevelName", "alias":"OVELTLevelName", "format":"", "formatNull":""},
+				{"name":"ΣΣA", "alias":"OVELTΣΣA", "format":"", "formatNull":""},
+				{"name":"ΣΣUxA", "alias":"OVELTΣΣUxA", "format":"", "formatNull":""},
+				{"name":"n", "alias":"OVELTn", "format":"", "formatNull":""},
+				{"name":"b", "alias":"OVELTb", "format":"", "formatNull":""},
+				{"name":"nxΣΣA", "alias":"OVELTnxΣΣA", "format":"", "formatNull":""},
+				{"name":"bxnxΣΣUxA", "alias":"OVELTbxnxΣΣUxA", "format":"", "formatNull":""}
+			]
+		},
+		{
+			"table":"HorizontalElements",
+			"alias":"HorizontalElements",
+			"Fields":[
+				{"name":"ID", "alias":"HEID", "format":"", "formatNull":""},
+				{"name":"BuildingID", "alias":"HEBuildingID", "format":"", "formatNull":""},
+				{"name":"PageBLevelID", "alias":"HEPageBLevelID", "format":"", "formatNull":""},
+				{"name":"HorizontalLevelID", "alias":"HEHorizontalLevelID", "format":"", "formatNull":""},
+				{"name":"EBuildingHorizontalElementID", "alias":"HEEBuildingHorizontalElementID", "format":"", "formatNull":""},
+				{"name":"ElementTypeID", "alias":"HEElementTypeID", "format":"", "formatNull":""},
+				{"name":"ElementTypeName", "alias":"HEElementTypeName", "format":"", "formatNull":""},
+				{"name":"ElementTypeU", "alias":"HEElementTypeU", "format":"", "formatNull":""},
+				{"name":"ElementTypePage", "alias":"HEElementTypePage", "format":"", "formatNull":""},
+				{"name":"HeatInsulationRecNumber", "alias":"HEHeatInsulationRecNumber", "format":"", "formatNull":""},
+				{"name":"ElementKind", "alias":"HEElementKind", "format":"", "formatNull":""},
+				{"name":"ElementGroupCaption", "alias":"HEElementGroupCaption", "format":"", "formatNull":""},
+				{"name":"RecNumber", "alias":"HERecNumber", "format":"", "formatNull":""},
+				{"name":"Name", "alias":"HEName", "format":"", "formatNull":""},
+				{"name":"PartNumber", "alias":"HEPartNumber", "format":"", "formatNull":""},
+				{"name":"P", "alias":"HEP", "format":"", "formatNull":""},
+				{"name":"Ψh", "alias":"HEΨh", "format":"", "formatNull":""},
+				{"name":"Ψv", "alias":"HEΨv", "format":"", "formatNull":""},
+				{"name":"l", "alias":"HEl", "format":"", "formatNull":""},
+				{"name":"MiddleHeight", "alias":"HEMiddleHeight", "format":"", "formatNull":""},
+				{"name":"b", "alias":"HEb", "format":"", "formatNull":""},
+				{"name":"Area", "alias":"HEArea", "format":"", "formatNull":""},
+				{"name":"AreaGround", "alias":"HEAreaGround", "format":"", "formatNull":""},
+				{"name":"AreaFreeSurface", "alias":"HEAreaFreeSurface", "format":"", "formatNull":""},
+				{"name":"AreaPilotis", "alias":"HEAreaPilotis", "format":"", "formatNull":""},
+				{"name":"AreaRoof", "alias":"HEAreaRoof", "format":"", "formatNull":""},
+				{"name":"AreaUncondition", "alias":"HEAreaUncondition", "format":"", "formatNull":""},
+				{"name":"AreaThermal", "alias":"HEAreaThermal", "format":"", "formatNull":""},
+				{"name":"AreaHorizontal", "alias":"HEAreaHorizontal", "format":"", "formatNull":""},
+				{"name":"UcChamber", "alias":"HEUcChamber", "format":"", "formatNull":""},
+				{"name":"IsRoofClosed", "alias":"HEIsRoofClosed", "format":"", "formatNull":""},
+				{"name":"ΣAxU", "alias":"HEΣAxU", "format":"", "formatNull":""},
+				{"name":"ΣAxUuncondition", "alias":"HEΣAxUuncondition", "format":"", "formatNull":""},
+				{"name":"IsGroundLevel", "alias":"HEIsGroundLevel", "format":"", "formatNull":""},
+				{"name":"IsPilotis", "alias":"HEIsPilotis", "format":"", "formatNull":""},
+				{"name":"Index", "alias":"HEIndex", "format":"", "formatNull":""},
+				{"name":"HasAdjacentBuilding", "alias":"HEHasAdjacentBuilding", "format":"", "formatNull":""},
+				{"name":"HasSolarSpace", "alias":"HEHasSolarSpace", "format":"", "formatNull":""},
+				{"name":"HasThermalZone", "alias":"HEHasThermalZone", "format":"", "formatNull":""},
+				{"name":"HasUnconditionSpace", "alias":"HEHasUnconditionSpace", "format":"", "formatNull":""},
+				{"name":"Image", "alias":"HEImage", "format":"", "formatNull":""}
 			]
 		},
 	]

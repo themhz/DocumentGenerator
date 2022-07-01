@@ -22,7 +22,8 @@ namespace DocumentGenerator {
             string fieldsPath = @"../../documents/fields.txt";
             string groupsPath = @"../../documents/groups.txt";
             string includesPath = @"../../documents/includes.txt";
-            string dataSetPath = @"../../documents/datasets/dataEnergyBuilding.xml";
+            //string dataSetPath = @"../../documents/datasets/dataEnergyBuilding.xml";
+            string dataSetPath = @"../../documents/datasets/dataHeatInsulation.xml";
             string dataSetPathSchema = @"../../documents/datasets/dsBuildingHeatInsulation.xsd";
            
 

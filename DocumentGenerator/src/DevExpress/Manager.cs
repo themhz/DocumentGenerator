@@ -242,7 +242,9 @@ namespace DocumentGenerator.DXDocuments
         /// <param name="bindingTable">The table that contains the data used for the table population</param>        
         public void PopulateTable(Comment comment, BindingTable bindingTable, List<BindingTable.Row> contextStack) { // JObject jo, Comment comment, string id = "", RichEditDocumentServer wp = null) {
 
+            
             Table table = comment.Table;
+            
             DataTable dataTable = bindingTable.DataTable;
 
             // Delete comment
@@ -366,13 +368,15 @@ namespace DocumentGenerator.DXDocuments
         /// <param name="rowIndex">the rowIndex that we will get the range</param>
         /// <param name="rowCount">how many rows</param>
         /// <returns></returns>
-        protected dxRange getRowsRange(dxTable table, int rowIndex, int rowCount) {
-            if(rowIndex == 4)
-            {
-                Console.WriteLine();
-            }
+        protected dxRange getRowsRange(dxTable table, int rowIndex, int rowCount) {          
             dxPosition start = table.Rows[rowIndex].Range.Start;
-            dxPosition end = table.Rows[rowIndex + rowCount - 1].Range.End;
+
+            dxPosition end = null;
+            if (rowIndex + rowCount>0)
+                end = table.Rows[rowIndex + rowCount - 1].Range.End;
+            else
+                end = start;
+
             int length = end.ToInt() - start.ToInt();
 
             return _wordProcessor.Document.CreateRange(start, length);
