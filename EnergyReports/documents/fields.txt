@@ -27,6 +27,7 @@
 			"Fields":[
 				{"name":"ID", "alias":"pblID"},
 				{"name":"Name", "alias":"pblName"},
+				{"name":"Image", "alias":"pblImage"},
 			]
 		},
 		{
@@ -292,7 +293,7 @@
 				{"name":"K", "alias":"HLK", "format":"", "formatNull":""},
 				{"name":"KF", "alias":"HLKF", "format":"", "formatNull":""},
 				{"name":"HasUnconditionSpace", "alias":"HLHasUnconditionSpace", "format":"", "formatNull":""},
-				{"name":"Image", "alias":"HLImage", "format":"", "formatNull":""}
+				{"name":"Image", "alias":"HLImage"}
 			]
 		},
 		{

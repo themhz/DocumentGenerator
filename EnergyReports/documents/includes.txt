@@ -50,5 +50,16 @@
 			"alias": "Annex53",
 			"table": "PageCBuildings",
 		},
+		{
+			"file":	"Annex54.docx",
+			"alias": "Annex54",
+			"table": "HorizontalLevels",
+		},		
+		{
+			"file":	"Annex541.docx",
+			"alias": "Annex541",
+			"table": "PageBLevels",
+		},		
+		
 	]
 }
