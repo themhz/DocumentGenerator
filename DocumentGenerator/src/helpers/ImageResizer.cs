@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace DocumentGenerator.Helpers {
     public static class ImageResizer {
 
-        public static byte[] resize(byte[] bytes, int _width, int _height) {
+        public static byte[] resize(byte[] bytes, int _width, int _height, int bitmapWidth=400, int bitmapHeight=270) {
             if (bytes.Length > 0) {
                 using (var ms = new MemoryStream(bytes)) {
                     var image = Image.FromStream(ms);
@@ -22,7 +22,7 @@ namespace DocumentGenerator.Helpers {
                     var width = (int)(image.Width * ratio);
                     var height = (int)(image.Height * ratio);
 
-                    var newImage = new Bitmap(374, 181);
+                    var newImage = new Bitmap(bitmapWidth, bitmapHeight);
                     Graphics.FromImage(newImage).DrawImage(image, 0, 0, width, height);
                     Bitmap bmp = new Bitmap(newImage);
 

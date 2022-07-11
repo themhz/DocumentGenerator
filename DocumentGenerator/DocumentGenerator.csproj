@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E4C312C0-5957-4036-9939-200D03D099D3}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>DocumentGenerator</RootNamespace>
     <AssemblyName>DocumentGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -31,6 +31,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.Data.v21.2, Version=21.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
@@ -66,12 +69,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="documents\datasets\dsBuildingHeatInsulation.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="src\AppEngine.cs" />
     <Compile Include="src\bindings\GroupValue.cs" />
     <Compile Include="src\bindings\BindingRelation.cs" />
     <Compile Include="src\bindings\BindingField.cs" />
@@ -88,46 +85,11 @@
     <Compile Include="src\helpers\ImageResizer.cs" />
     <Compile Include="src\helpers\ObjectExtensions.cs" />
     <Compile Include="src\Processor.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="documents\Annex51.docx" />
-    <None Include="documents\Annex5.docx" />
-    <None Include="documents\datasets\dsBuildingHeatInsulation.xsc">
-      <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
-    </None>
-    <None Include="documents\datasets\dsBuildingHeatInsulation.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsBuildingHeatInsulation.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="documents\datasets\dsBuildingHeatInsulation.xss">
-      <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
-    </None>
-    <None Include="documents\Chap3.docx" />
-    <None Include="documents\main_document_generated.docx" />
-    <None Include="documents\rptAnnex4Sygedrotika.docx" />
-    <None Include="documents\rptAnnex4.docx" />
-    <None Include="documents\rptAnnex4Group.docx" />
-    <None Include="documents\Annex4.docx" />
-    <None Include="documents\Slabs.docx" />
-    <None Include="documents\PageA.docx" />
-    <None Include="documents\Main.docx" />
-    <None Include="documents\energyBuilding\Main.docx" />
-    <None Include="documents\energyBuilding\PageADetails.docx" />
-    <None Include="documents\PageADetails.docx" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="documents\datasets\dataHeatInsulation.xml" />
-    <Content Include="documents\todo.txt" />
-    <Content Include="documents\fields.txt" />
-    <Content Include="documents\FieldTranslatorDocumentGenerator.txt" />
-    <Content Include="documents\groups.txt" />
-    <Content Include="documents\includes.txt" />
-    <Content Include="documents\datasets\dataEnergyBuilding.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Log\Loger.csproj">

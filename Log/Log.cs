@@ -18,7 +18,7 @@ namespace DocumentGenerator
 {
     public static class Log
     {
-        private static ILogger _logger;
+        //private static ILogger _logger;
         private static bool _enabled;
 
         private const int MAXSIZE = 16777216;
@@ -46,7 +46,7 @@ namespace DocumentGenerator
                         if (progKey != string.Empty)
                             progKey = progKey + ".";
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                     }
 
@@ -89,7 +89,7 @@ namespace DocumentGenerator
                 else
                     _enabled = false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // MsgBox("Logger initialization failed! (" & ex.Message & ")", MsgBoxStyle.Critical)
                 _enabled = false;

@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace DocumentGenerator
 {
-    class Processor
+    public class Processor
     {
         protected string templatePath;
         protected string savePath;
@@ -25,8 +25,6 @@ namespace DocumentGenerator
         protected Dictionary<string, BindingTable> tablesIndex;
         protected Dictionary<string, BindingInclude> includesIndex;
         protected IDataSource dataSource = null;
-
-        protected Manager manager = null;
 
         public Processor(string _templatePath, string _fieldsPath, string _groupsPath, string _includesPath, string _savePath, IDataSource _dataSource = null)
         {
@@ -59,6 +57,9 @@ namespace DocumentGenerator
             // Ελέγχουμε αν υπάρχουν τα αρχεία
             checkFilePaths();
 
+            // Προετοιμασία των δεδομένων
+            onPrepareData();
+
             // Διαβάζουμε τα πεδία από τα json
             readFields();
 
@@ -71,6 +72,16 @@ namespace DocumentGenerator
             // Έναρξη Manager
             startManager();
         }
+
+        protected virtual void onPrepareData()
+        {
+        }
+
+        //protected virtual void onFilterRow(BindingTable.Row row) {
+        //}
+
+        //protected virtual void onSetStyle(Range range) {
+        //}
 
         /// <summary>
         /// Ελέγχει αν υπάρχουν τα βασικά αρχεία includes και fields
@@ -192,11 +203,24 @@ namespace DocumentGenerator
                     //3.1.2 Αν δεν είναι include:
                     if (!token.Alias.StartsWith("include:"))
                     {
+                        BindingField field;
                         //3.1.1 Αν είναι field:
                         //3.1.1.1 Ελέγχουμε αν το alias είναι έγκυρο
-                        if (fieldsIndex.TryGetValue(token.Alias, out BindingField field))
+                        if (fieldsIndex.TryGetValue(token.Alias, out field))
                         {
                             ReplaceToken(manager, token, field);
+                        } 
+                        else
+                        {
+                            if (token.Alias!= "PBR" && checkValidJson("{"+token.Alias+"}")) 
+                            {
+                                JObject JsonToken = JObject.Parse("{" + token.Alias + "}");
+                                if (fieldsIndex.TryGetValue(JsonToken.GetValue("name").ToString(), out field)) 
+                                {
+                                    ReplaceToken(manager, token, field, JsonToken);
+                                }
+                            }
+                            
                         }
                     }
                     else
@@ -231,6 +255,22 @@ namespace DocumentGenerator
             }
         }
 
+       
+        private bool checkValidJson(string jsonString) {            
+            try {
+                var tmpObj = JObject.Parse(jsonString);
+                
+                return true;
+            } 
+            catch (FormatException fex) 
+            {
+                return false;
+            }
+            catch (Exception ex) //some other exception
+            {
+                return false;
+            }
+        }
         private void ReplaceTokenWithTemplate(string fileName, Manager manager, Token token, BindingInclude include)
         {
             Manager subManager = process(getFilePath(fileName, include.File), null);
@@ -266,13 +306,13 @@ namespace DocumentGenerator
             }
         }
 
-        private void ReplaceToken(Manager manager, Token token, BindingField field)
+        private void ReplaceToken(Manager manager, Token token, BindingField field, JObject joToken = null)
         {
             //3.1.1.2 Αντικαθιστούμε το alias με το κείμενο
             int index = 0; // TODO: Να διαβάζει το index από το .docx
             if (field.Type.Name == "Byte[]")
             {
-                manager.ReplaceTextWithImage(token.Range.Value, dataSource.GetContextValue(field, index, bindingStack));
+                manager.ReplaceTextWithImage(token.Range.Value, dataSource.GetContextValue(field, index, bindingStack), joToken);
             }
             else
             {
@@ -289,7 +329,6 @@ namespace DocumentGenerator
                 Log.Error($"File '{path}' doesn't exist", $"currentFile '{currentFile}'", $"fileName '{fileName}' ");
                 throw new Exception($"File '{path}' doesn't exist");
             }
-                
             return path;
         }
 
