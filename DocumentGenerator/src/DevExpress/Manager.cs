@@ -372,10 +372,11 @@ namespace DocumentGenerator.DXDocuments
         /// <param name="rowIndex">the rowIndex that we will get the range</param>
         /// <param name="rowCount">how many rows</param>
         /// <returns></returns>
-        protected dxRange getRowsRange(dxTable table, int rowIndex, int rowCount) {          
-            dxPosition start = table.Rows[rowIndex].Range.Start;
+        protected dxRange getRowsRange(dxTable table, int rowIndex, int rowCount) {
 
+            dxPosition start = table.Rows[rowIndex].Range.Start;
             dxPosition end = null;
+
             if (rowIndex + rowCount>0)
                 end = table.Rows[rowIndex + rowCount - 1].Range.End;
             else

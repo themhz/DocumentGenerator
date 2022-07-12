@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="documents\Annex6.docx" />
     <None Include="documents\Annex541.docx" />
     <None Include="documents\Annex54.docx" />
     <None Include="documents\Annex53.docx" />

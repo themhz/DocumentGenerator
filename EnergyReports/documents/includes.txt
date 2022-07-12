@@ -53,13 +53,16 @@
 		{
 			"file":	"Annex54.docx",
 			"alias": "Annex54",
-			"table": "HorizontalLevels",
+			"table": "PageBLevels",
 		},		
 		{
 			"file":	"Annex541.docx",
 			"alias": "Annex541",
-			"table": "PageBLevels",
+			"table": "HorizontalLevels",
 		},		
-		
+		{
+			"file":	"Annex6.docx",
+			"alias": "Annex6",
+		},
 	]
 }
