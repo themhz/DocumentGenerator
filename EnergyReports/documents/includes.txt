@@ -64,5 +64,34 @@
 			"file":	"Annex6.docx",
 			"alias": "Annex6",
 		},
+		{
+			"file":	"Annex7.docx",
+			"alias": "Annex7",
+		},
+		{
+			"file":	"Annex71.docx",
+			"alias": "Annex71",
+			"table": "PageBLevels",
+		},
+		{
+			"file":	"Annex711.docx",
+			"alias": "Annex711",
+			"table": "PageBLevelFaces",
+		},
+		{
+			"file":	"Annex7111.docx",
+			"alias": "Annex7111",
+			"table": "Annex7Walls",
+		},
+		{
+			"file":	"Annex8.docx",
+			"alias": "Annex8",			
+		},
+		{
+			"file":	"Annex81.docx",
+			"alias": "Annex81",
+			"table": "ThermalBridgeCategories",
+		},
+
 	]
 }

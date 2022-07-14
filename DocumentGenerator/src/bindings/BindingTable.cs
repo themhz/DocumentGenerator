@@ -12,7 +12,7 @@ namespace DocumentGenerator
         public class Row {
             public BindingTable Table { get; protected set; }
             public DataRow DataRow { get; protected set; }
-            //
+            
             protected object[] extraValues;
 
             public Row(BindingTable _table, DataRow row) {
