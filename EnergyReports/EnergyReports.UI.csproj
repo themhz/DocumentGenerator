@@ -63,6 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="documents\datasets\dsBuildingHeatInsulation.cs">
+      <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>
+    </Compile>
     <Compile Include="documents\datasets\dsBuildingHeatInsulation.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -95,6 +98,7 @@
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>dsBuildingHeatInsulation.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <CustomToolNamespace>EnergyReports</CustomToolNamespace>
     </None>
     <None Include="documents\datasets\dsBuildingHeatInsulation.xss">
       <DependentUpon>dsBuildingHeatInsulation.xsd</DependentUpon>

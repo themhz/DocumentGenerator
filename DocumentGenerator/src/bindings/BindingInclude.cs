@@ -11,11 +11,13 @@ namespace DocumentGenerator
         public string Alias { get; protected set; }
         public string File { get; protected set; }
         public BindingTable Table { get; protected set; }
-        public BindingInclude(string alias, string file, BindingTable table) {            
+        public BindingTable FilterTable { get; protected set; }
+
+        public BindingInclude(string alias, string file, BindingTable table, BindingTable filterTable) {
             Alias = alias;
             Table = table;
-            File = file;            
+            File = file;
+            FilterTable = filterTable;
         }
-
     }
 }

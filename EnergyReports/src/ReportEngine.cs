@@ -37,7 +37,7 @@ namespace DocumentGenerator
 
             IDataSource dataSource = new Xml(dataSets);
             // Ενεργοποιούμε τον επεξεργαστή εγγράφων
-            Processor processor = new Processor(originalDocument, fieldsPath, groupsPath, includesPath, generatedDocument, dataSource);
+            Processor processor = new EnergyReportManager(originalDocument, fieldsPath, groupsPath, includesPath, generatedDocument, dataSource);
             processor.start();
         }
     }

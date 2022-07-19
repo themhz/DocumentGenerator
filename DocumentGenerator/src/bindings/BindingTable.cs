@@ -396,6 +396,27 @@ namespace DocumentGenerator
             return null;
         }
 
+        public int GetContextCount(List<Row> contextStack, Row row)
+        {
+            List<Row> stack = new List<Row>();
+            stack.AddRange(contextStack);
+            stack.Add(row);
+
+            BindingTable.Enumerator enumerator = new BindingTable.Enumerator(this);
+            int count = 0;
+
+            enumerator.Start();
+            while ((row = enumerator.Next()) != null)
+            { // TODO: use index for performance
+                if (row.InContext(stack))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
         //public void FilterBindingTable()
         //{
         //    if (this.DataTable.TableName == "Annex4VerticalOpaqueElements")

@@ -16,6 +16,13 @@
 				{"name":"ElementTypeU"},				
 				{"name":"ElementGroupCaption"},				
 			]
-		}
+		},
+		{
+			"table": "Annex7Walls",
+			"alias": "Annex7WallsGroup",
+			"Fields":[
+				{"name":"U"},			
+			]
+		},
 	]
 }

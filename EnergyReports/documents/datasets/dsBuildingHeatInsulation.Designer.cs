@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace EnergyReports.documents.datasets {
+namespace EnergyReports {
     
     
     /// <summary>

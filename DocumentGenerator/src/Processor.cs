@@ -77,8 +77,10 @@ namespace DocumentGenerator
         {
         }
 
-        //protected virtual void onFilterRow(BindingTable.Row row) {
-        //}
+        protected virtual bool onFilterRow(BindingTable.Row row) {
+
+            return true;
+        }
 
         //protected virtual void onSetStyle(Range range) {
         //}
@@ -296,12 +298,22 @@ namespace DocumentGenerator
             { // TODO: use index for performance
                 if (row.InContext(bindingStack))
                 {
-                    //3.1.2.1.1 Καλούμε την process() ->
-                    Manager subManager = process(getFilePath(fileName, include.File), row);
+                    bool exclude = false;
+                    if (include.FilterTable != null)
+                    {
+                        int count = include.FilterTable.GetContextCount(bindingStack, row);
+                        exclude = count == 0;
+                    }
 
-                    //3.1.2.1.2 Το παραγόμενο document το εισάγουμε στο τρέχον document
-                    manager.ReplaceRangeWithContent(subManager, token.Range);
-                    manager.ReplacePageBreakToken(enumerator.Remaining == 0);
+                    if(!exclude && onFilterRow(row))
+                    {
+                        //3.1.2.1.1 Καλούμε την process() ->
+                        Manager subManager = process(getFilePath(fileName, include.File), row);
+
+                        //3.1.2.1.2 Το παραγόμενο document το εισάγουμε στο τρέχον document
+                        manager.ReplaceRangeWithContent(subManager, token.Range);
+                        manager.ReplacePageBreakToken(enumerator.Remaining == 0);
+                    }
                 }
             }
         }
@@ -727,7 +739,10 @@ namespace DocumentGenerator
                     // Table
                     BindingTable bindingTable = GetIncludeTable(jsonInclude);
 
-                    BindAliasFileTable(includeAlias, includeFile, bindingTable);
+                    // Filter table
+                    BindingTable filterTable = GetFilterTable(jsonInclude);
+
+                    BindAliasFileTable(includeAlias, includeFile, bindingTable, filterTable);
                 }
             }
             else
@@ -737,9 +752,9 @@ namespace DocumentGenerator
             }
         }
 
-        private void BindAliasFileTable(string includeAlias, string includeFile, BindingTable bindingTable)
+        private void BindAliasFileTable(string includeAlias, string includeFile, BindingTable bindingTable, BindingTable filterTable)
         {
-            BindingInclude bindingInclude = new BindingInclude(includeAlias, includeFile, bindingTable);
+            BindingInclude bindingInclude = new BindingInclude(includeAlias, includeFile, bindingTable, filterTable);
             bindingIncludes.Add(bindingInclude);
             includesIndex.Add(includeAlias, bindingInclude);
         }
@@ -747,6 +762,21 @@ namespace DocumentGenerator
         private BindingTable GetIncludeTable(JObject jsonInclude)
         {
             string includeTable = (string)jsonInclude["table"];
+
+            BindingTable bindingTable = null;
+            //if (!tablesIndex.TryGetValue(includeTable, out bindingTable)) {
+
+            if (includeTable != null && tablesIndex.ContainsKey(includeTable))
+            {
+                bindingTable = tablesIndex[includeTable];
+            }
+
+            return bindingTable;
+        }
+
+        private BindingTable GetFilterTable(JObject jsonInclude)
+        {
+            string includeTable = (string)jsonInclude["nonzero"];
 
             BindingTable bindingTable = null;
             //if (!tablesIndex.TryGetValue(includeTable, out bindingTable)) {
