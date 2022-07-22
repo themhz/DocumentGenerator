@@ -112,11 +112,11 @@ namespace DocumentGenerator
             Manager manager = process(templatePath);
             if (manager != null)
             {
-                manager.Save(savePath);
+                string path = manager.SaveTemp();
                 manager.Close();
                 manager.Dispose();
 
-                Manager.ShowFile(Path.GetFullPath(savePath));
+                Manager.ShowFile(path);
             }
         }
 

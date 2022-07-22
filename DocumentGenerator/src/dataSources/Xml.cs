@@ -73,7 +73,8 @@ namespace DocumentGenerator {
         public string GetValue(BindingField field, BindingTable.Row row) {
             DataColumn column = field.Column;
 
-            object value = row.DataRow[column];
+            object value = row.GetObject(field);
+            //object value = row.DataRow[column];
 
             return formatValue(value, field);
         }

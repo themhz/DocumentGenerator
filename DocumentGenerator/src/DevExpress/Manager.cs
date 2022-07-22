@@ -75,8 +75,15 @@ namespace DocumentGenerator.DXDocuments
             }
         }
 
-        public void Save(string fileName) {            
-            _wordProcessor.SaveDocument(fileName, DocumentFormat.OpenXml);            
+        public string SaveTemp() {
+            Random r = new Random();
+            int i =r.Next(1, 9999);
+
+            string fileNameTemp = "Doc-" + i.ToString("0000") + ".docx";
+            fileNameTemp = Path.Combine(System.Environment.GetEnvironmentVariable("TEMP"), fileNameTemp);
+            _wordProcessor.SaveDocument(fileNameTemp, DocumentFormat.OpenXml);
+
+            return fileNameTemp;
         }
 
         public static void ShowFile(string fileName) {

@@ -76,8 +76,13 @@
 		{
 			"file":	"Annex711.docx",
 			"alias": "Annex711",
-			"table": "Annex7WallsGroup",
+			"table": "PageBLevelFaces",
 		},
+		{
+			"file":	"Annex7111.docx",
+			"alias": "Annex7111",
+			"table": "Annex7WallsGroup",
+		},		
 		{
 			"file":	"Annex8.docx",
 			"alias": "Annex8",			

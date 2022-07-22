@@ -21,7 +21,8 @@
 			"table": "Annex7Walls",
 			"alias": "Annex7WallsGroup",
 			"Fields":[
-				{"name":"U"},			
+				{"name":"U"},
+				{"name":"PageBLevelFaceID"}
 			]
 		},
 	]
