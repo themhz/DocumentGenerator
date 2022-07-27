@@ -529,6 +529,52 @@
 				{"name":"UseEnergyCalculation", "alias":"TBCUseEnergyCalculation", "format":"", "formatNull":""},
 				{"name":"Index", "alias":"TBCIndex", "format":"", "formatNull":""}
 			]
+		},
+		{
+			"table":"Annex7HorizontalElementsUnheated",
+			"alias":"Annex7HorizontalElementsUnheated",
+			"Fields":[
+				{"name":"ID", "alias":"A7HEUID", "format":"", "formatNull":""},
+				{"name":"BuildingID", "alias":"A7HEUBuildingID", "format":"", "formatNull":""},
+				{"name":"PageBLevelID", "alias":"A7HEUPageBLevelID", "format":"", "formatNull":""},
+				{"name":"HorizontalLevelID", "alias":"A7HEUHorizontalLevelID", "format":"", "formatNull":""},
+				{"name":"EBuildingHorizontalElementID", "alias":"A7HEUEBuildingHorizontalElementID", "format":"", "formatNull":""},
+				{"name":"ElementTypeID", "alias":"A7HEUElementTypeID", "format":"", "formatNull":""},
+				{"name":"ElementTypeName", "alias":"A7HEUElementTypeName", "format":"", "formatNull":""},
+				{"name":"ElementTypeU", "alias":"A7HEUElementTypeU", "format":"", "formatNull":""},
+				{"name":"ElementTypePage", "alias":"A7HEUElementTypePage", "format":"", "formatNull":""},
+				{"name":"ElementKind", "alias":"A7HEUElementKind", "format":"", "formatNull":""},
+				{"name":"RecNumber", "alias":"A7HEURecNumber", "format":"", "formatNull":""},
+				{"name":"Name", "alias":"A7HEUName", "format":"", "formatNull":""},
+				{"name":"PartNumber", "alias":"A7HEUPartNumber", "format":"", "formatNull":""},
+				{"name":"P", "alias":"A7HEUP", "format":"", "formatNull":""},
+				{"name":"Ψh", "alias":"A7HEUΨh", "format":"", "formatNull":""},
+				{"name":"Ψv", "alias":"A7HEUΨv", "format":"", "formatNull":""},
+				{"name":"l", "alias":"A7HEUl", "format":"", "formatNull":""},
+				{"name":"MiddleHeight", "alias":"A7HEUMiddleHeight", "format":"", "formatNull":""},
+				{"name":"b", "alias":"A7HEUb", "format":"", "formatNull":""},
+				{"name":"Area", "alias":"A7HEUArea", "format":"", "formatNull":""},
+				{"name":"AreaGround", "alias":"A7HEUAreaGround", "format":"", "formatNull":""},
+				{"name":"AreaFreeSurface", "alias":"A7HEUAreaFreeSurface", "format":"", "formatNull":""},
+				{"name":"AreaPilotis", "alias":"A7HEUAreaPilotis", "format":"", "formatNull":""},
+				{"name":"AreaRoof", "alias":"A7HEUAreaRoof", "format":"", "formatNull":""},
+				{"name":"AreaUncondition", "alias":"A7HEUAreaUncondition", "format":"", "formatNull":""},
+				{"name":"AreaThermal", "alias":"A7HEUAreaThermal", "format":"", "formatNull":""},
+				{"name":"AreaHorizontal", "alias":"A7HEUAreaHorizontal", "format":"", "formatNull":""},
+				{"name":"UcChamber", "alias":"A7HEUUcChamber", "format":"", "formatNull":""},
+				{"name":"IsRoofClosed", "alias":"A7HEUIsRoofClosed", "format":"", "formatNull":""},
+				{"name":"ΣAxU", "alias":"A7HEUΣAxU", "format":"", "formatNull":""},
+				{"name":"ΣAxUuncondition", "alias":"A7HEUΣAxUuncondition", "format":"", "formatNull":""},
+				{"name":"IsGroundLevel", "alias":"A7HEUIsGroundLevel", "format":"", "formatNull":""},
+				{"name":"IsPilotis", "alias":"A7HEUIsPilotis", "format":"", "formatNull":""},
+				{"name":"Index", "alias":"A7HEUIndex", "format":"", "formatNull":""},
+				{"name":"HasAdjacentBuilding", "alias":"A7HEUHasAdjacentBuilding", "format":"", "formatNull":""},
+				{"name":"HasSolarSpace", "alias":"A7HEUHasSolarSpace", "format":"", "formatNull":""},
+				{"name":"HasThermalZone", "alias":"A7HEUHasThermalZone", "format":"", "formatNull":""},
+				{"name":"HasUnconditionSpace", "alias":"A7HEUHasUnconditionSpace", "format":"", "formatNull":""},
+				{"name":"UnconditionSpaceImage", "alias":"A7HEUUnconditionSpaceImage", "format":"", "formatNull":""},
+				{"name":"Image", "alias":"A7HEUImage", "format":"", "formatNull":""}
+			]
 		}
 	]
 }

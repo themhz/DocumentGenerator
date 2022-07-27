@@ -24,6 +24,6 @@
 				{"name":"U"},
 				{"name":"PageBLevelFaceID"}
 			]
-		},
+		}		
 	]
 }

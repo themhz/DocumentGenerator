@@ -252,12 +252,12 @@ namespace DocumentGenerator.DXDocuments
         /// </summary>
         /// <param name="comment">A comment object that links to the document table</param>
         /// <param name="bindingTable">The table that contains the data used for the table population</param>        
-        public void PopulateTable(Comment comment, BindingTable bindingTable, List<BindingTable.Row> contextStack) { // JObject jo, Comment comment, string id = "", RichEditDocumentServer wp = null) {
+        public void PopulateTable(Comment comment, BindingTable bindingTable, List<BindingTable.Row> contextStack, JObject JOcomment = null) { // JObject jo, Comment comment, string id = "", RichEditDocumentServer wp = null) {
 
             
             Table table = comment.Table;
             
-            DataTable dataTable = bindingTable.DataTable;
+            //DataTable dataTable = bindingTable.DataTable;
 
             // Delete comment
             _wordProcessor.Document.Delete(comment.Range.Value);
@@ -273,12 +273,19 @@ namespace DocumentGenerator.DXDocuments
             // Copy body <n> times
             var bodyRange = getRowsRange(table.Element, table.HeaderCount, table.BodyCount);
 
-            BindingTable.Row row;
-            BindingTable.Enumerator enumerator = new BindingTable.Enumerator(bindingTable);
+            //BindingTable.Row row;
+            //BindingTable.Enumerator enumerator = new BindingTable.Enumerator(bindingTable);
+            
             dxRange lastRange = newTableRange;
+            BindingTable.Row[] rows;
+            if (JOcomment==null || !JOcomment.TryGetValue("Where", out JToken value))
+                rows = bindingTable.Where("");
+            else
+                rows = bindingTable.Where(JOcomment.GetValue("Where").ToString());
 
-            enumerator.Start();
-            while ((row = enumerator.Next()) != null)  // TODO: use index for performance
+            //enumerator.Start();
+            //while ((row = enumerator.Next()) != null)  // TODO: use index for performance
+            foreach (BindingTable.Row row in rows)
             {
                 if (row.InContext(contextStack)) 
                 {

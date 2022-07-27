@@ -169,7 +169,7 @@ namespace DocumentGenerator
                 //3.1.3.2 Βρίσκουμε τον πίνακα που έχει τα δεδομένα                    
                 if (tablesIndex.TryGetValue(tableName.GetValue("Table").ToString(), out BindingTable table))
                 {
-                    manager.PopulateTable(comment, table, bindingStack);                    
+                    manager.PopulateTable(comment, table, bindingStack, tableName);                    
                 }
                 else
                 {                    
@@ -180,17 +180,20 @@ namespace DocumentGenerator
 
         private JObject ConvertCommentToJson(String text)
         {
+            text = text.Replace("\r", "").Replace("\n", "");
             string json = "";
             string[] parts = text.Split(',');
             for (int i=0; i < parts.Length; i++){
                 string part = parts[i].Trim();
                 string[] keyValue = part.Split(':');
-                json += keyValue[0] + ":\""+keyValue[1] + "\",";
+                if(i==0)
+                    json += "\""+keyValue[0]+"\"" + ":\""+keyValue[1] + "\"";
+                else
+                    json += ",\"" + keyValue[0] + "\"" + ":\"" + keyValue[1] + "\"";
             }
             json = "{" + json + "}";
 
-            JObject jsonObject = JObject.Parse(json);
-            //jsonObject.GetValue("type").ToString()
+            JObject jsonObject = JObject.Parse(json);            
             return jsonObject;        
         }
 

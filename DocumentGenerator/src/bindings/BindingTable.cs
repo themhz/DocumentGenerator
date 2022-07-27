@@ -417,6 +417,30 @@ namespace DocumentGenerator
             return count;
         }
 
+        //Todo Na peiraksw ton kwidika
+        public Row[] Where(string filter, string sort = "")
+        {
+            List<Row> rows = new List<Row>();
+
+            if (filter.Trim() == string.Empty)
+            {
+                for (int index = 0; index< DataTable.Rows.Count; index++)
+                {
+                    rows.Add(new Row(this, DataTable.Rows[index]));
+                }
+            }
+            else
+            {
+                var dataRows = DataTable.Select(filter, sort);
+                foreach(var dataRow in dataRows)
+                {
+                    rows.Add(new Row(this, dataRow));
+                }
+            }
+
+            return rows.ToArray();
+        }
+
         //public void FilterBindingTable()
         //{
         //    if (this.DataTable.TableName == "Annex4VerticalOpaqueElements")

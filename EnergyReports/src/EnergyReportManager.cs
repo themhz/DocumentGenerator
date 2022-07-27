@@ -39,14 +39,10 @@ namespace DocumentGenerator
                     return false;
                 }
 
-                //if (row.DataRow is dsBuildingHeatInsulation.PageBLevelsRow dataRow)
-                //{
-                //    if (!dataRow.IsLevel)
-                //    {
-                //        return false;
-                //    }
-                //}
             }
+
+        
+
             return true;
         }
     }
