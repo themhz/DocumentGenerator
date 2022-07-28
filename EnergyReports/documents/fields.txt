@@ -575,6 +575,25 @@
 				{"name":"UnconditionSpaceImage", "alias":"A7HEUUnconditionSpaceImage", "format":"", "formatNull":""},
 				{"name":"Image", "alias":"A7HEUImage", "format":"", "formatNull":""}
 			]
-		}
+		},
+		{
+			"table":"Annex7WallsTotals",
+			"alias":"Annex7WallsTotals",
+			"Fields":[
+				{"name":"ID", "alias":"A7WTID", "format":"", "formatNull":""},
+				{"name":"PageBLevelFaceID", "alias":"A7WTPageBLevelFaceID", "format":"", "formatNull":""},
+				{"name":"PageBLevelID", "alias":"A7WTPageBLevelID", "format":"", "formatNull":""},
+				{"name":"Name", "alias":"A7WTName", "format":"", "formatNull":""},
+				{"name":"ElementGroupKind", "alias":"A7WTElementGroupKind", "format":"", "formatNull":""},
+				{"name":"U", "alias":"A7WTU", "format":"{0:0.00}", "formatNull":""},
+				{"name":"AreaOverGround", "alias":"A7WTAreaOverGround", "format":"{0:0.00}", "formatNull":""},
+				{"name":"GroundDeepMiddle", "alias":"A7WTGroundDeepMiddle", "format":"{0:0.00}", "formatNull":""},
+				{"name":"AreaUnderground", "alias":"A7WTAreaUnderground", "format":"{0:0.00}", "formatNull":""},
+				{"name":"U_", "alias":"A7WTU_", "format":"", "formatNull":""},
+				{"name":"ΣUxAreaOverGround", "alias":"A7WTΣUxAreaOverGround", "format":"", "formatNull":""},
+				{"name":"ΣUxAreaUnderground", "alias":"A7WTΣUxAreaUnderground", "format":"", "formatNull":""},
+				{"name":"Index", "alias":"A7WTIndex", "format":"", "formatNull":""}
+			]
+		},
 	]
 }

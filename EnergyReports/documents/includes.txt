@@ -84,6 +84,13 @@
 			"where": "IsLevel = true"
 		},
 		{
+			"file":	"Annex74.docx",
+			"alias": "Annex74",
+			"table": "PageBLevelFaces",
+			"where": "ElementClass = 'Τοίχοι' And HasUnconditionSpace = True"
+		},
+		
+		{
 			"file":	"Annex711.docx",
 			"alias": "Annex711",
 			"table": "PageBLevelFaces",
@@ -96,7 +103,7 @@
 		
 		{
 			"file":	"Annex8.docx",
-			"alias": "Annex8",			
+			"alias": "Annex8",
 		},
 		{
 			"file":	"Annex81.docx",

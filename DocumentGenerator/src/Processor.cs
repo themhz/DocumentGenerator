@@ -293,11 +293,15 @@ namespace DocumentGenerator
 
         private void ReplaceTokenWithTable(string fileName, Manager manager, Token token, BindingInclude include, BindingTable bindingTable)
         {
-            BindingTable.Row row;
-            BindingTable.Enumerator enumerator = new BindingTable.Enumerator(bindingTable);
+            //BindingTable.Row row;
+            //BindingTable.Enumerator enumerator = new BindingTable.Enumerator(bindingTable);
 
-            enumerator.Start();
-            while ((row = enumerator.Next()) != null)
+            BindingTable.Row[] rows = bindingTable.Where(include.Where);
+
+            //enumerator.Start();
+            //while ((row = enumerator.Next()) != null)
+
+            foreach (BindingTable.Row row in rows)
             { // TODO: use index for performance
                 if (row.InContext(bindingStack))
                 {
@@ -314,11 +318,12 @@ namespace DocumentGenerator
                         Manager subManager = process(getFilePath(fileName, include.File), row);
 
                         //3.1.2.1.2 Το παραγόμενο document το εισάγουμε στο τρέχον document
-                        manager.ReplaceRangeWithContent(subManager, token.Range);
-                        manager.ReplacePageBreakToken(enumerator.Remaining == 0);
+                        manager.ReplaceRangeWithContent(subManager, token.Range);                        
                     }
                 }
             }
+
+            manager.ReplacePageBreakToken(true);
         }
 
         private void ReplaceToken(Manager manager, Token token, BindingField field, JObject joToken = null)
@@ -745,7 +750,9 @@ namespace DocumentGenerator
                     // Filter table
                     BindingTable filterTable = GetFilterTable(jsonInclude);
 
-                    BindAliasFileTable(includeAlias, includeFile, bindingTable, filterTable);
+                    string where = GetIncludeWhere(jsonInclude);
+
+                    BindAliasFileTable(includeAlias, includeFile, bindingTable, filterTable, where);
                 }
             }
             else
@@ -755,9 +762,9 @@ namespace DocumentGenerator
             }
         }
 
-        private void BindAliasFileTable(string includeAlias, string includeFile, BindingTable bindingTable, BindingTable filterTable)
+        private void BindAliasFileTable(string includeAlias, string includeFile, BindingTable bindingTable, BindingTable filterTable, string where)
         {
-            BindingInclude bindingInclude = new BindingInclude(includeAlias, includeFile, bindingTable, filterTable);
+            BindingInclude bindingInclude = new BindingInclude(includeAlias, includeFile, bindingTable, filterTable, where);
             bindingIncludes.Add(bindingInclude);
             includesIndex.Add(includeAlias, bindingInclude);
         }
@@ -818,6 +825,20 @@ namespace DocumentGenerator
             return includeAlias;
         }
 
+        private static string GetIncludeWhere(JObject jsonInclude)
+        {
+            string where = (string)jsonInclude["where"];
+
+            if (where == null || where == string.Empty)
+            {
+                //Log.Error("Initialize includes: an alias is missing or is empty");
+                //throw new Exception("Initialize includes: an alias is missing or is empty");
+                return "";
+            }
+
+            return where;
+        }
+
         #endregion
 
         #region "   MISCELLANEOUS   "
@@ -833,7 +854,7 @@ namespace DocumentGenerator
             {
                 return JObject.Parse(text);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Log.Error($"text is not in json format {text}");
                 return null;

@@ -416,8 +416,7 @@ namespace DocumentGenerator
 
             return count;
         }
-
-        //Todo Na peiraksw ton kwidika
+        
         public Row[] Where(string filter, string sort = "")
         {
             List<Row> rows = new List<Row>();
@@ -431,7 +430,7 @@ namespace DocumentGenerator
             }
             else
             {
-                var dataRows = DataTable.Select(filter, sort);
+                var dataRows = DataTable.Select(filter, sort.Replace("and",","));
                 foreach(var dataRow in dataRows)
                 {
                     rows.Add(new Row(this, dataRow));

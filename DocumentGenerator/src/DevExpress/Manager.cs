@@ -279,9 +279,16 @@ namespace DocumentGenerator.DXDocuments
             dxRange lastRange = newTableRange;
             BindingTable.Row[] rows;
             if (JOcomment==null || !JOcomment.TryGetValue("Where", out JToken value))
+            {
                 rows = bindingTable.Where("");
+            }
             else
-                rows = bindingTable.Where(JOcomment.GetValue("Where").ToString());
+            {
+                JOcomment.TryGetValue("Sort", out JToken sort);
+                
+                rows = bindingTable.Where(JOcomment.GetValue("Where").ToString(), (sort==null? "": sort.ToString()));
+            }
+                
 
             //enumerator.Start();
             //while ((row = enumerator.Next()) != null)  // TODO: use index for performance
