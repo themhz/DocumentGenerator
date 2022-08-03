@@ -216,21 +216,11 @@ namespace DocumentGenerator.DXDocuments
             return null;
         }
 
-        //private dxTable getTableByRange(dxRange range) {
-        //    dxTableCell tableCell = _wordProcessor.Document.Tables.GetTableCell(range.Start);
-        //    return tableCell.Row.Table;
-        //}
-
+     
         public void ReplaceRangeWithText(Range range, string targetText) {
             //this.mainWordProcessor.Document.BeginUpdate();
             if (range != null)
                 _wordProcessor.Document.Replace(range.Value, targetText);
-        }
-
-        public void ReplaceRangeWithText(dxRange range, string targetText) {
-            //this.mainWordProcessor.Document.BeginUpdate();
-            if (range != null)
-                _wordProcessor.Document.Replace(range, targetText);
         }
 
         public void ReplaceRangeWithContent(Manager manager, Range range /*, string file, string id, string foreightKey = "", RichEditDocumentServer wp = null*/) {
@@ -243,9 +233,6 @@ namespace DocumentGenerator.DXDocuments
             _wordProcessor.Document.InsertDocumentContent(start, document.Range, DevExpress.XtraRichEdit.API.Native.InsertOptions.KeepSourceFormatting);
         }
 
-        public void Delete(Comment comment) {
-            _wordProcessor.Document.Delete(comment.Element.Range);
-        }
 
         /// <summary>
         /// Populates a template table with data
@@ -254,8 +241,8 @@ namespace DocumentGenerator.DXDocuments
         /// <param name="bindingTable">The table that contains the data used for the table population</param>        
         public void PopulateTable(Comment comment, BindingTable bindingTable, List<BindingTable.Row> contextStack, JObject JOcomment = null) { // JObject jo, Comment comment, string id = "", RichEditDocumentServer wp = null) {
 
-            
-            Table table = comment.Table;
+             
+             Table table = comment.Table;
             
             //DataTable dataTable = bindingTable.DataTable;
 
@@ -301,15 +288,33 @@ namespace DocumentGenerator.DXDocuments
                     foreach (Token token in table.Tokens) 
                     {
                         //3.1.1 Αν είναι field:
-                        BindingField field = bindingTable.BindingFields.Find((BindingField f) => token.Alias == f.Alias || token.Alias == f.FullName);
+
+                        JObject JsonToken =  null;
+                        BindingField field = null;
+                        if (IsValidJson("{"+token.Alias+"}"))
+                        {
+                            JsonToken = JObject.Parse("{"+token.Alias+"}");
+                            field = bindingTable.BindingFields.Find((BindingField f) => JsonToken["name"].ToString() == f.Alias || token.Alias == JsonToken["name"].ToString());
+                        }
+                        else
+                        {
+                            field = bindingTable.BindingFields.Find((BindingField f) => token.Alias == f.Alias || token.Alias == f.FullName);
+                        }                                                                        
 
                         //3.1.1.1 Ελέγχουμε αν το alias είναι έγκυρο
                         if (field != null) {
                             //3.1.1.2 Βρίσκουμε την τιμή του field
                             string text = row.GetValueAsString(field, contextStack);
-
-                            //3.1.1.3 Αντικαθιστούμε το alias με το κείμενο
-                            replaceTextInRange($"{{{token.Original}}}", text, lastRange);
+                            if (field.Type.Name == "Byte[]")
+                            {                                
+                                ReplaceTextWithImageInTable(lastRange, text, JsonToken, $"{{{token.Original}}}");                               
+                            }
+                            else
+                            {
+                                
+                                //3.1.1.3 Αντικαθιστούμε το alias με το κείμενο
+                                replaceTextInRange($"{{{token.Original}}}", text, lastRange);
+                            }                                                            
                         } 
                         else 
                         {
@@ -369,7 +374,8 @@ namespace DocumentGenerator.DXDocuments
                             string text = row.GetValueAsString(field, contextStack);
 
                             //3.1.1.3 Αντικαθιστούμε το alias με το κείμενο
-                            replaceTextInRange($"{{{token.Original}}}", text, lastRange);
+                            //replaceTextInRange($"{{{token.Original}}}", text, lastRange);
+                            //ReplaceToken(Manager manager, Token token, BindingField field, JObject joToken = null)
                         }
                         else
                         {
@@ -385,6 +391,7 @@ namespace DocumentGenerator.DXDocuments
             _wordProcessor.Document.ReplaceAll("{{newTable}}", " ",DevExpress.XtraRichEdit.API.Native.SearchOptions.None, _wordProcessor.Document.Range);
             _wordProcessor.Document.Delete(comment.Table.Element.Range);
         }
+
 
         /// <summary>
         /// Gets the row range
@@ -419,6 +426,7 @@ namespace DocumentGenerator.DXDocuments
 
             return commentText;
         }
+        
 
         protected void replaceTextInRange(string sourceText, string targetText, dxRange range) {
             //this.mainWordProcessor.Document.BeginUpdate();
@@ -428,6 +436,48 @@ namespace DocumentGenerator.DXDocuments
             }
         }
 
+        protected void ReplaceTextWithImageInTable(dxRange sourceRange, string byteCode, JObject joToken = null, string sourceText = "")
+        {
+            _wordProcessor.Document.Unit = DevExpress.Office.DocumentUnit.Inch;
+            if (sourceRange != null)
+            {
+
+                int width = joToken == null ? 700 : getImageProperty(joToken, "width", 700);
+                int height = joToken == null ? 700 : getImageProperty(joToken, "height", 700);
+                int bitmapWidth = joToken == null ? 700 : getImageProperty(joToken, "bitmapWidth", 700);
+                int bitmapHeight = joToken == null ? 400 : getImageProperty(joToken, "bitmapHeight", 400);
+
+                byte[] bytes = Convert.FromBase64String(byteCode);
+                bytes = ImageResizer.resize(bytes, width, height, bitmapWidth, bitmapHeight);
+
+                if (bytes.Length > 0)
+                {
+                    using (MemoryStream ms = new MemoryStream(bytes))
+                    {
+                        dxImageSource image = dxImageSource.FromStream(ms);
+                        if (sourceText != null)
+                        {
+                            dxRange[] targetRanges = this.getImageRanges(sourceText, sourceRange);
+                            foreach (var targetRange in targetRanges)
+                            {                                
+                                _wordProcessor.Document.Images.Insert(targetRange.Start, image);
+                                _wordProcessor.Document.Delete(targetRange);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        protected dxRange[] getImageRanges(string search, dxRange range)
+        {
+            JObject item = JObject.Parse(search.Replace("!",""));
+
+            var irange = _wordProcessor.Document.FindAll(new Regex("{!name:\"" + item["name"].ToString() + "\"[^}]*}"), range);
+
+            return irange;
+
+        }
         protected dxRange[] getTextRanges(string search, dxRange range) {
             return _wordProcessor.Document.FindAll(new Regex(search), range);
         }
@@ -440,7 +490,7 @@ namespace DocumentGenerator.DXDocuments
                 _wordProcessor.Document.ReplaceAll(r, string.Empty);
         }
 
-        public void ReplaceTextWithImage(dxRange sourceRange, string byteCode, JObject joToken = null) {            
+        public void ReplaceTextWithImage(dxRange sourceRange, string byteCode, JObject joToken = null, string sourceText = "") {            
             _wordProcessor.Document.Unit = DevExpress.Office.DocumentUnit.Inch;            
             if (sourceRange != null) {
 
@@ -457,11 +507,14 @@ namespace DocumentGenerator.DXDocuments
                     using (MemoryStream ms = new MemoryStream(bytes))
                     {
                         dxImageSource image = dxImageSource.FromStream(ms);
-                        _wordProcessor.Document.Images.Insert(sourceRange.Start, image);
+                        if (sourceText != null)
+                        {
+                            _wordProcessor.Document.Images.Insert(sourceRange.End, image);
+                        }
                     }
                 }
             }
-            _wordProcessor.Document.Delete(sourceRange);            
+            _wordProcessor.Document.Delete(sourceRange);
         }
 
         public int getImageProperty(JObject joToken, string jsonProperty, int defaultSize)
@@ -478,9 +531,29 @@ namespace DocumentGenerator.DXDocuments
         public string FixBase64ForImage(string Image)
         {
             System.Text.StringBuilder sbText = new System.Text.StringBuilder(Image, Image.Length);
-            sbText.Replace("\r\n", String.Empty); sbText.Replace(" ", String.Empty);
+            sbText.Replace("\r\n", String.Empty); 
+            sbText.Replace(" ", String.Empty);
             return sbText.ToString();
         }
+
+        private bool IsValidJson(string strInput)
+        {
+            
+            try
+            {
+                var tmpObj = JObject.Parse(strInput);
+                return true;
+            }
+            catch (FormatException fex)
+            {
+                return false;
+            }
+            catch (Exception ex) //some other exception
+            {
+                return false;
+            }
+        }
+
 
     }
 }

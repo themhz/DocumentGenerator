@@ -595,5 +595,68 @@
 				{"name":"Index", "alias":"A7WTIndex", "format":"", "formatNull":""}
 			]
 		},
+		{
+			"table":"ThermalBridgeLevels",
+			"alias":"ThermalBridgeLevels",
+			"Fields":[
+				{"name":"ID", "alias":"TBLID", "format":"", "formatNull":""},
+				{"name":"ThermalBridgeCategoryID", "alias":"TBLThermalBridgeCategoryID", "format":"", "formatNull":""},
+				{"name":"ThermalBridgeCategoryName", "alias":"TBLThermalBridgeCategoryName", "format":"", "formatNull":""},
+				{"name":"EBuildingThermalBridgeCategoryID", "alias":"TBLEBuildingThermalBridgeCategoryID", "format":"", "formatNull":""},
+				{"name":"BuildingID", "alias":"TBLBuildingID", "format":"", "formatNull":""},
+				{"name":"PageBLevelID", "alias":"TBLPageBLevelID", "format":"", "formatNull":""},
+				{"name":"LevelName", "alias":"TBLLevelName", "format":"", "formatNull":""},
+				{"name":"FloorNumber", "alias":"TBLFloorNumber", "format":"", "formatNull":""},
+				{"name":"TotallxΨTEEKENAK", "alias":"TBLTotallxΨTEEKENAK", "format":"", "formatNull":""},
+				{"name":"TotallxΨBuildingEnergyEfficiency", "alias":"TBLTotallxΨBuildingEnergyEfficiency", "format":"", "formatNull":""},
+				{"name":"TotallxΨBuildingHeatInsulationEfficiency", "alias":"TBLTotallxΨBuildingHeatInsulationEfficiency", "format":"", "formatNull":""},
+				{"name":"TotallxΨTEEKENAKUnconditionSpace", "alias":"TBLTotallxΨTEEKENAKUnconditionSpace", "format":"", "formatNull":""},
+				{"name":"TotallxΨBuildingEnergyEfficiencyUnconditionSpace", "alias":"TBLTotallxΨBuildingEnergyEfficiencyUnconditionSpace", "format":"", "formatNull":""},
+				{"name":"TotallxΨBuildingHeatInsulationEfficiencyUnconditionSpace", "alias":"TBLTotallxΨBuildingHeatInsulationEfficiencyUnconditionSpace", "format":"", "formatNull":""},
+				{"name":"UseHeatInsulation", "alias":"TBLUseHeatInsulation", "format":"", "formatNull":""},
+				{"name":"UseEnergyCalculation", "alias":"TBLUseEnergyCalculation", "format":"", "formatNull":""},
+				{"name":"Image", "alias":"TBLImage", "format":"", "formatNull":""}
+			]
+		},
+		{
+			"table":"ThermalBridgeElementsGrouping",
+			"alias":"ThermalBridgeElementsGrouping",
+			"Fields":[
+				{"name":"ID", "alias":"TBEGID", "format":"", "formatNull":""},
+				{"name":"ThermalBridgeLevelID", "alias":"TBEGThermalBridgeLevelID", "format":"", "formatNull":""},
+				{"name":"PageBLevelID", "alias":"TBEGPageBLevelID", "format":"", "formatNull":""},
+				{"name":"PageBLevelFaceID", "alias":"TBEGPageBLevelFaceID", "format":"", "formatNull":""},
+				{"name":"ThermalBridgeCategoryID", "alias":"TBEGThermalBridgeCategoryID", "format":"", "formatNull":""},
+				{"name":"ThermalBridgeCategoryName", "alias":"TBEGThermalBridgeCategoryName", "format":"", "formatNull":""},
+				{"name":"ThermalBridgeTypeID", "alias":"TBEGThermalBridgeTypeID", "format":"", "formatNull":""},
+				{"name":"ThermalBridgeTypeName", "alias":"TBEGThermalBridgeTypeName", "format":"", "formatNull":""},
+				{"name":"ThermalBridgeTypeRecNumber", "alias":"TBEGThermalBridgeTypeRecNumber", "format":"", "formatNull":""},
+				{"name":"RecNumber", "alias":"TBEGRecNumber", "format":"", "formatNull":""},
+				{"name":"IsForHeatInsulatonPrinting", "alias":"TBEGIsForHeatInsulatonPrinting", "format":"", "formatNull":""},
+				{"name":"IsForEnergyPrinting", "alias":"TBEGIsForEnergyPrinting", "format":"", "formatNull":""},
+				{"name":"ThermalBridgeOrientationIndex", "alias":"TBEGThermalBridgeOrientationIndex", "format":"", "formatNull":""},
+				{"name":"fΨ", "alias":"TBEGfΨ", "format":"", "formatNull":""},
+				{"name":"l", "alias":"TBEGl", "format":"", "formatNull":""},
+				{"name":"fΨxl", "alias":"TBEGfΨxl", "format":"", "formatNull":""},
+				{"name":"n", "alias":"TBEGn", "format":"", "formatNull":""},
+				{"name":"ΣlxΨ", "alias":"TBEGΣlxΨ", "format":"", "formatNull":""},
+				{"name":"Ψ", "alias":"TBEGΨ", "format":"", "formatNull":""},
+				{"name":"ΣlxΨxb", "alias":"TBEGΣlxΨxb", "format":"", "formatNull":""},
+				{"name":"ΣlxΨxbEE", "alias":"TBEGΣlxΨxbEE", "format":"", "formatNull":""},
+				{"name":"b", "alias":"TBEGb", "format":"", "formatNull":""},
+				{"name":"bEE", "alias":"TBEGbEE", "format":"", "formatNull":""},
+				{"name":"IsAtAdjacentBuildingElement", "alias":"TBEGIsAtAdjacentBuildingElement", "format":"", "formatNull":""},
+				{"name":"IsAtSolarSpaceElement", "alias":"TBEGIsAtSolarSpaceElement", "format":"", "formatNull":""},
+				{"name":"IsAtThermalZoneElement", "alias":"TBEGIsAtThermalZoneElement", "format":"", "formatNull":""},
+				{"name":"IsAtUnconditionSpaceElement", "alias":"TBEGIsAtUnconditionSpaceElement", "format":"", "formatNull":""},
+				{"name":"IsAtGroundLevel", "alias":"TBEGIsAtGroundLevel", "format":"", "formatNull":""},
+				{"name":"ShowThermalBridgeTypeLine", "alias":"TBEGShowThermalBridgeTypeLine", "format":"", "formatNull":""},
+				{"name":"ShowLevelLine", "alias":"TBEGShowLevelLine", "format":"", "formatNull":""},
+				{"name":"Index", "alias":"TBEGIndex", "format":"", "formatNull":""},
+				{"name":"UseHeatInsulation", "alias":"TBEGUseHeatInsulation", "format":"", "formatNull":""},
+				{"name":"UseEnergyCalculation", "alias":"TBEGUseEnergyCalculation", "format":"", "formatNull":""},
+				{"name":"Image", "alias":"TBEGImage", "format":"", "formatNull":""}
+			]
+		},
 	]
 }

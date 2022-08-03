@@ -169,7 +169,7 @@ namespace DocumentGenerator
                 //3.1.3.2 Βρίσκουμε τον πίνακα που έχει τα δεδομένα                    
                 if (tablesIndex.TryGetValue(tableName.GetValue("Table").ToString(), out BindingTable table))
                 {
-                    manager.PopulateTable(comment, table, bindingStack, tableName);                    
+                    manager.PopulateTable(comment, table, bindingStack, tableName);
                 }
                 else
                 {                    
@@ -260,7 +260,6 @@ namespace DocumentGenerator
             }
         }
 
-       
         private bool checkValidJson(string jsonString) {            
             try {
                 var tmpObj = JObject.Parse(jsonString);
@@ -276,6 +275,7 @@ namespace DocumentGenerator
                 return false;
             }
         }
+
         private void ReplaceTokenWithTemplate(string fileName, Manager manager, Token token, BindingInclude include)
         {
             Manager subManager = process(getFilePath(fileName, include.File), null);
@@ -865,11 +865,3 @@ namespace DocumentGenerator
     }
 }
 
-// (OK) 1. Διάβασμα των groups.txt
-// (OK) 2. Δημιουργία βοηθητικών πινάκων και Dictionary με τα διακριτά groups
-// (OK) 3. Δημιουργία επιπλέον σχέσεων
-// (OK) 4. Προσθήκη επιπλέον πεδίων στους κανονικούς πίνακες (ίσως μέσω βοηθητικών δομών και όχι πάνω στους κανονικούς πίνακες)
-// (OK) 5. Σκανάρισμα
-// (OK) 6. Φιλτράρισμα των πινάκων με βάση τα groups
-// 7. Events
-// 8. Order By
